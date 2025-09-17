@@ -1,33 +1,42 @@
-<p align="center"><img src="img/logo.png" alt="icon"></p>
-
-<h1 align="center">Ureshii Anime</h1>
-
-[<p align="center">]()
+<div align="center">
+  <img src="img/logo.png" alt="Ureshii Anime Logo" width="200">
+  <h1>Ureshii Anime</h1>
+  <p>
+    <a href="https://ureshiianime.github.io/ureshiianime/">Ver sitio web</a> •
+    <a href="https://github.com/ureshiianime">GitHub</a> •
+    <a href="https://lutukisolo.me/">Web personal</a>
+  </p>
+</div>
 
 ---
 
-Sistemas operativos compatibles:
+## 📱 Plataformas compatibles
 
-- Windows 
+- Windows
 - Linux
 - MacOS | Intel y Silicon (Beta)
-- IOS
+- iOS
 - Android
-- Todos los compatibles con buscadores...
+- Cualquier dispositivo con navegador web
 
- Accede a nuestra página aquí: | [https://ureshiianime.github.io/ureshiianime/](https://ureshiianime.github.io/ureshiianime/) |
-| -------- | ---- |
+## 🌐 Acceso
 
-Al utilizar esta página aceptas que se envíen los siguientes datos del sistema a ureshiianime.github.io con el fin del funcionamento del mismo:
+Visita nuestra página web: [https://ureshiianime.github.io](https://ureshiianime.github.io)
+
+## 🔒 Política de privacidad
+
+Al utilizar esta página aceptas que se envíen los siguientes datos del sistema a ureshiianime.github.io con el fin del funcionamiento del mismo:
+
 - Tipo de dispositivo
-- Versión del buscador
-- Nombre del buscador
+- Versión del navegador
+- Nombre del navegador
 - IP Pública
 
-Estos datos no serán compartidos con terceros, si deseas que tus datos sean eliminados por favor contacta por soporte de github pages o elimina las cookies de la página. (No nos hacemos responsables del mal funcionamento de la página al utilizar esto)
+Estos datos no serán compartidos con terceros. Si deseas que tus datos sean eliminados, por favor contacta por soporte de GitHub Pages o elimina las cookies de la página. (No nos hacemos responsables del mal funcionamiento de la página al utilizar esto)
 
-© 2025 LutukiSolo. Todos los derechos reservados.
+## 📄 Licencia
+
+© 2025 LutukiSolo. Todos los derechos reservados. [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 Queda estrictamente prohibida la reproducción total o parcial del código fuente de esta página sin autorización expresa.
 
-• GitHub: https://ureshiianime.github.io
-• Web personal: https://lutukisolo.me/
+![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png)
