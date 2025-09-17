@@ -1,0 +1,1888 @@
+:root {
+    --background-color: #121212;
+    --card-color: #1e1e1e;
+    --text-color: #ffffff;
+    --accent-color: #ff6e00;
+    --secondary-color: #2c2c2c;
+    --watched-color: #4caf50;
+    --primary-color: #ff6e00;
+    --gradient-color: #ff6e00;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Avenir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding-bottom: 2rem;
+}
+
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+
+
+
+
+.anime-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 5px;
+}
+
+.action-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.action-button:hover {
+    transform: scale(1.2);
+}
+
+.action-icon {
+    width: 22px;
+    height: 22px;
+    fill: #d1d1d1;
+    transition: fill 0.3s ease;
+}
+
+.action-button:hover .action-icon {
+    fill: #d1d1d1;
+}
+
+.play-button:hover .action-icon {
+    fill: #ff5722;
+}
+
+.favorite-button.in-favorites .action-icon {
+    fill: #ff4081;
+}
+
+.favorite-button:hover .action-icon {
+    fill: #ff4081;
+}
+
+.watchlist-button.in-list:hover .action-icon {
+    fill: var(--watched-color);
+}
+
+.anime-info .watchlist-button.in-list:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.watchlist-button.in-list:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.watchlist-button:hover .action-icon {
+    fill: var(--watched-color);
+}
+
+.info-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 0;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.anime-card:hover .anime-info .info-actions {
+    opacity: 1 !important;
+}
+
+.info-actions.visible {
+    opacity: 0 !important;
+}
+
+.anime-info {
+    padding: 0.8rem;
+    position: relative;
+    min-height: 70px;
+}
+
+.anime-info .action-button {
+    background: transparent !important;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: none !important;
+}
+
+.anime-info .action-button:hover {
+    transform: none !important;
+    opacity: 0.8;
+}
+
+.anime-info .action-icon {
+    width: 24px;
+    height: 24px;
+    fill: #ff5722 !important;
+}
+
+.anime-info .action-button:hover .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-info .favorite-button:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.anime-info .watchlist-button:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.anime-info .favorite-button.in-favorites .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-info .watchlist-button.in-list .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-info .tooltip {
+    display: block !important;
+}
+
+.action-button .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.action-button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    margin: 1.5rem auto; 
+    justify-content: center; 
+}
+
+#search-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+#search-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0.25rem !important;
+        max-width: calc(100vw - 0.5rem) !important;
+        width: calc(100vw - 0.5rem) !important;
+        overflow-x: hidden !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+    
+    #anime-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+}
+
+.anime-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.anime-info {
+    padding: 0.8rem;
+}
+
+.anime-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.anime-info h3 {
+    font-size: 1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.anime-subtitle {
+    font-size: 0.8rem;
+    color: #d1d1d1;
+    margin-top: 5px;
+}
+
+.anime-subtitle .sub,
+.anime-subtitle .dob {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.anime-subtitle .sub {
+    color: #d1d1d1;
+}
+
+.anime-subtitle .dob {
+    color: #d1d1d1;
+}
+
+.anime-episodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.episode {
+    background-color: var(--secondary-color);
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.episode:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.episode.watched {
+    background-color: var(--watched-color);
+    border-color: rgba(76, 175, 80, 0.3);
+    animation: watchedPulse 0.5s ease-in-out;
+}
+
+@keyframes watchedPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.episode::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.episode:hover::after {
+    opacity: 0.2;
+}
+
+.add-to-list {
+    display: none;
+}
+
+.overlay-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: auto;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
+
+.anime-overlay .action-button,
+.anime-poster .anime-overlay .action-button {
+    background: transparent !important;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: none !important;
+}
+
+.anime-overlay .action-button:hover,
+.anime-poster .anime-overlay .action-button:hover {
+    transform: none !important;
+    opacity: 0.8;
+    box-shadow: none !important;
+}
+
+.anime-overlay .action-icon,
+.anime-poster .anime-overlay .action-icon {
+    width: 24px;
+    height: 24px;
+    fill: #ff5722 !important;
+}
+
+.anime-overlay .action-button:hover .action-icon,
+.anime-poster .anime-overlay .action-button:hover .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-overlay .favorite-button:hover .action-icon,
+.anime-poster .anime-overlay .favorite-button:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.anime-overlay .watchlist-button:hover .action-icon,
+.anime-poster .anime-overlay .watchlist-button:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.anime-overlay .favorite-button.in-favorites .action-icon,
+.anime-poster .anime-overlay .favorite-button.in-favorites .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-overlay .watchlist-button.in-list .action-icon,
+.anime-poster .anime-overlay .watchlist-button.in-list .action-icon {
+    fill: #ff5722 !important;
+}
+
+.anime-overlay .watchlist-button.in-list:hover .action-icon,
+.anime-poster .anime-overlay .watchlist-button.in-list:hover .action-icon {
+    fill: #ff8a65 !important;
+}
+
+.overlay-actions {
+    display: none;
+}
+
+.detail-list-button {
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+}
+
+.season-title {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.season-toggle {
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.season-episodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.anime-detail-view {
+    padding: 1rem;
+}
+
+.anime-detail-header {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+.anime-detail-image {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.anime-detail-info {
+    margin-left: 1.5rem;
+    flex: 1;
+}
+
+.anime-detail-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.anime-detail-status {
+    margin-bottom: 1rem;
+    color: #aaa;
+}
+
+.anime-detail-seasons {
+    margin-top: 1rem;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    overflow-y: auto;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal.fade-in {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal.fade-out {
+    animation: modalFadeOut 0.3s ease-out;
+}
+
+@keyframes modalFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.modal-content {
+    background-color: var(--card-color);
+    margin: 5% auto;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal.fade-out .modal-content {
+    animation: modalContentFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes modalContentFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 75%; 
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-source-info {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.loading-message, .error-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.loading-message {
+    animation: pulse 1.5s infinite;
+}
+
+.error-message {
+    background-color: rgba(220, 53, 69, 0.8);
+    max-width: 80%;
+}
+
+.error-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.retry-button, .open-external-button {
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.retry-button:hover {
+    background-color: #5649c0;
+}
+
+.open-external-button {
+    background-color: #e74c3c;
+}
+
+.open-external-button:hover {
+    background-color: #c0392b;
+}
+
+.netu-button {
+    background-color: #3498db;
+}
+
+.netu-button:hover {
+    background-color: #2980b9;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.episode-info {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mark-watched {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.mark-watched:hover {
+    background-color: #ff4425;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mark-watched.watched {
+    background-color: var(--watched-color);
+    animation: markWatchedPulse 0.5s ease-in-out;
+}
+
+@keyframes markWatchedPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+.mark-watched::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.5s, height 0.5s, opacity 0.5s;
+}
+
+.mark-watched:active::before {
+    width: 300px;
+    height: 300px;
+    opacity: 1;
+    transition: 0s;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 50; 
+    transition: margin-top 0.3s ease-in-out;
+    padding-top: 1rem; 
+}
+
+.filter-button {
+    background-color: var(--card-color);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px; 
+}
+
+.filter-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.filter-button.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--gradient-color));
+    border-color: transparent;
+    box-shadow: 0 4px 8px rgba(255, 94, 58, 0.4);
+    animation: pulse 1s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 94, 58, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 94, 58, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 94, 58, 0);
+    }
+}
+
+
+.new-episode {
+    background-color: #ff7700;
+}
+
+.new-episode:hover {
+    background-color: #ff5e3a;
+}
+
+.toggle-all-watched-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.toggle-all-watched-button:hover {
+    background-color: #ff7e5a;
+    transform: translateY(-2px);
+}
+
+.new-episode-badge {
+    background-color: #ff9800;
+    color: white;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    margin-left: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.pagination-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: var(--accent-color);
+}
+
+.page-info {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .anime-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .anime-grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1601px) {
+    .anime-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .anime-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem;
+    }
+    
+    .load-more-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .pagination-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .page-info {
+        font-size: 0.8rem;
+        width: 100%;
+        text-align: center;
+        order: -1;
+        margin-bottom: 0.5rem;
+    }
+    
+    .load-more-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+.episode.unwatch-mode:hover {
+    background-color: #ff5252;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+}
+
+.new-episode {
+    background-color: #FFD700;
+    color: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.new-episode:hover {
+    background-color: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.5);
+}
+
+@keyframes nextEpisodePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+.episode.future {
+    background-color: #222;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+    border: 1px solid #333;
+}
+
+.episode.next-release {
+    background-color: #FFD700;
+    color: #000;
+    border: 1px solid #FFC107;
+    animation: nextEpisodePulse 2s infinite;
+    cursor: pointer;
+}
+
+.release-date-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.release-date-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.release-date-content {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.release-date-content h3 {
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.release-date-content p {
+    font-size: 1.2rem;
+    margin: 15px 0;
+}
+
+.release-date-close {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.release-date-close:hover {
+    background-color: #ff7043;
+}
+
+.toggle-all-watched-button.showing-watched-only {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.new-episode-badge {
+    background-color: #ff9800;
+    color: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.new-episode::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.new-episode:hover::after {
+    opacity: 0.2;
+}
+
+.in-list-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.in-list-indicator svg {
+    width: 16px;
+    height: 16px;
+}
+
+.in-list-indicator .action-icon {
+    fill: #ff5722 !important;
+}
+
+.in-list-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 40px 40px 0;
+    border-color: transparent #000000 transparent transparent;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.in-list-corner svg {
+    position: absolute;
+    top: 5px;
+    right: -35px;
+    width: 16px;
+    height: 16px;
+    fill: #ff5722;
+}
+
+
+.anime-card:hover .in-list-indicator,
+.anime-card:hover .in-list-corner {
+    opacity: 0;
+}
+
+.section-title {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+}
+
+.section-title h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin: 0;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title h2:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+.menu-button {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+}
+
+.menu-button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .menu-button {
+        display: flex;
+    }
+    
+    .header-logo {
+        margin-left: 0.5rem;
+    }
+    
+    .nav-categories {
+        position: fixed;
+        top: var(--header-height);
+        left: -100%;
+        width: 200px;
+        flex-direction: column;
+        background-color: #272727;
+        padding: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: left 0.3s ease;
+        z-index: 99;
+    }
+    
+    .nav-categories.active {
+        left: 0;
+    }
+    
+    .nav-category {
+        padding: 0.8rem;
+        width: 100%;
+        border-radius: 8px;
+    }
+    
+    header {
+        justify-content: space-between;
+    }
+    
+    .header-buttons {
+        margin-left: auto;
+        margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.hero-carousel {
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    margin-top: -50px; 
+}
+
+.hero-slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.hero-slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, var(--background-color), transparent);
+    z-index: 0;
+}
+
+.hero-slide-content {
+    position: relative;
+    z-index: 2;
+    max-width: 400px;
+    margin-bottom: 5%;
+}
+
+.hero-slide-logo {
+    max-width: 300px;
+    max-height: 100px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.hero-slide-description {
+    color: #aaaaaa;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 350px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hero-slide-tags {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.hero-slide-tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    display: inline-block;
+}
+
+.hero-slide-tag.rating {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+
+.hero-slide-tag.lang {
+    background-color: transparent;
+    color: #b4b4b4;
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+
+.hero-slide-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.hero-slide-button {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    position: relative;
+    height: 44px;
+    box-sizing: border-box;
+}
+
+.hero-slide-button.play-button {
+    background-color: var(--accent-color);
+    color: var(--background-color); 
+}
+
+.hero-slide-button.play-button svg {
+    fill: var(--background-color); 
+}
+
+.hero-slide-button.add-button {
+    background-color: transparent;
+    color: var(--accent-color);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
+    border: none;
+}
+
+.hero-slide-button.add-button:not(.favorite-button) {
+    border: 2px solid var(--accent-color);
+}
+
+.hero-slide-button.add-button.favorite-button {
+    border: none;
+}
+
+.hero-slide-button.add-button.unwatch-button {
+    border: none;
+    position: relative;
+}
+
+.hero-slide-button.add-button.unwatch-button .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 160px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    margin-top: 5px;
+}
+
+.hero-slide-button.add-button.unwatch-button .dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.hero-slide-button.add-button.unwatch-button .dropdown-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.hero-slide-button.add-button.unwatch-button .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.hero-slide-button.add-button.unwatch-button .dropdown-item:hover {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+}
+
+.hero-slide-button.add-button .action-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--accent-color);
+}
+
+.hero-slide-button.add-button.in-list .action-icon {
+    fill: var(--accent-color);
+}
+
+
+.hero-slide-button.play-button:hover {
+    background-color: #ff7755;
+}
+
+.hero-slide-button.add-button:not(.favorite-button):hover {
+    background-color: transparent;
+}
+
+.hero-slide-button.add-button.favorite-button:hover {
+    background-color: transparent;
+}
+
+.hero-slide-button.add-button:hover .action-icon {
+    fill: var(--text-color);
+    opacity: 1;
+}
+
+.hero-slide-button.add-button.favorite-button:hover .action-icon {
+    fill: #ff8a65;
+    opacity: 1;
+}
+
+.hero-slide-button.add-button:not(.favorite-button):hover .action-icon {
+    fill: #ff8a65;
+    opacity: 1;
+}
+
+.hero-slide-button .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: normal;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+.hero-slide-button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}
+
+.hero-dots {
+    display: flex;
+    gap: 8px;
+    width: 50%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.hero-dot {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.hero-dot.active {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: none;
+}
+
+.hero-dot:not(.active) {
+    width: 50%;
+    margin: 0 auto; 
+    transition: width 0.3s ease;
+}
+
+.hero-dot-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-color);
+    transition: width 0.1s linear;
+}
+
+.hero-dot.active .hero-dot-progress {
+    width: 0%;
+    animation: progressAnimation 10s linear forwards;
+}
+
+@keyframes progressAnimation {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+@media (min-width: 769px) {
+    .hero-carousel {
+        position: relative;
+    }
+    
+    .hero-slide-bg {
+        width: 120%;
+    object-fit: cover;
+    object-position: left;
+    }
+    
+    .hero-slide::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30%;
+        height: 100%;
+        background: linear-gradient(to left, var(--background-color), transparent);
+        z-index: 1;
+    }
+    
+    .hero-slide-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .hero-controls {
+        bottom: 40px;
+        justify-content: flex-start;
+        padding-left: 5%;
+    }
+    
+    .hero-dots {
+        margin: 0;
+    }
+    
+    .hero-slide-content .hero-slide-button {
+        margin-bottom: 15px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .hero-carousel {
+        height: 75vh;
+    }
+    
+    .hero-slide {
+        justify-content: flex-end;
+        padding-bottom: 8%;
+    }
+    
+    .hero-slide-bg {
+        width: 140%;
+        object-position: center 30%;
+    }
+    
+    .hero-slide-content {
+        max-width: 550px;
+        margin-bottom: 2%;
+    }
+    
+    .hero-slide-logo {
+        max-width: 450px;
+        max-height: 150px;
+    }
+    
+    .hero-slide-description {
+        font-size: 1.3rem;
+        max-width: 520px;
+        -webkit-line-clamp: 4;
+        line-height: 1.5;
+    }
+    
+    .hero-slide-tag {
+        font-size: 1rem !important;
+        padding: 4px 10px;
+        margin-right: 10px;
+    }
+    
+    .hero-slide-button{
+        padding: 16px 32px !important;
+        font-size: 1.2rem !important;
+        height: 60px !important;
+        box-sizing: border-box !important;
+    }
+    
+    .hero-slide-button.add-button {
+        padding: 16px !important;
+        height: 60px !important;
+        width: 60px !important;
+    }
+    
+    .hero-controls {
+        bottom: 140px;
+    }
+    
+    .hero-dots {
+        max-width: 250px;
+    }
+    
+    .hero-dot {
+        height: 8px;
+    }
+    
+    h2 {
+        font-size: 2.2rem;
+    }
+    
+
+    
+    .section-title h2 {
+        font-size: 2.4rem;
+    }
+    
+    .section-title h2:after {
+        width: 60px;
+        height: 4px;
+    }
+    
+    .notification-container h2 {
+        font-size: 2rem;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-carousel {
+        height: 75vh;
+    }
+    
+    .hero-slide-bg {
+        width: 100%;
+        object-fit: cover;
+        object-position: center 10%;
+    top: 0;
+    height: 100%;
+    }
+    
+    .hero-slide-content {
+        text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
+    .hero-slide-logo {
+        max-width: 220px;
+    max-height: 90px;
+    }
+    
+    .hero-slide-description {
+        display: none;
+    }
+    
+    .hero-slide-tags {
+        margin-bottom: 0.8rem;
+    justify-content: center;
+    width: 100%;
+    }
+    
+    .hero-slide-tag {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .hero-slide-button {
+        margin: 0 auto;
+        margin-bottom: 25px; 
+        height: 44px; 
+    }
+    
+    .hero-slide-button.add-button {
+        height: 44px;
+        width: 44px;
+    }
+    
+    .hero-dots {
+        margin-top: 0;
+    }
+}
+
+.footer {
+    background-color: var(--card-color);
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0;
+    position: relative;
+    bottom: 0;
+}
+
+.footer-content {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.disclaimer {
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+header.hidden {
+    transform: translateY(-100%);
+    box-shadow: none;
+}
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.load-more-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.load-more-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.load-more-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.load-more-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.notification-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-container {
+    background-color: var(--card-color);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    animation: notification-appear 0.5s ease forwards;
+}
+
+@keyframes notification-appear {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.notification-container h2 {
+    background: linear-gradient(135deg, var(--primary-color), var(--gradient-color));
+    color: white;
+    padding: 1.2rem;
+    margin: 0;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.notification-content {
+    padding: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.notification-content p {
+    margin-bottom: 1rem;
+}
+
+.notification-content hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 1.5rem 0;
+}
+
+.notification-content .disclaimer {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.notification-close {
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease;
+}
+
+.notification-close:hover {
+    transform: scale(1.2);
+}
+
+.notification-content strong {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .anime-card:hover .anime-info .info-actions {
+        opacity: 0 !important;
+    }
+    
+    .anime-card:hover .in-list-indicator,
+    .anime-card:hover .in-list-corner {
+        opacity: 1 !important;
+    }
+}

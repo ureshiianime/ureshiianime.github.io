@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ureshii Anime</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ureshii Anime">
+    <script src="glob/localstorage.js"></script>
+    <script src="glob/google-drive.js"></script>
+    <script src="animes.js"></script>
+    <script src="glob/header.js"></script>
+    <script src="glob/cards.js"></script>
+    <link rel="stylesheet" href="glob/cards.css">
+    <link rel="stylesheet" href="glob/header.css">
+</head>
+<body>
+    <div class="notification-overlay" id="first-visit-notification">
+        <div class="notification-container">
+            <span class="notification-close">&times;</span>
+            <h2>¡Bienvenido a Ureshii Anime!</h2>
+            <div class="notification-content">
+                <p><strong>Recomendamos encarecidamente usar un bloqueador de anuncios</strong> en cualquier dispositivo que utilices ya sea iPhone, Android, Ordenador, Tablet...</p>
+                <p>No recomendamos usar el sistema de navegación entre episodios de AnimeFlv. En su lugar, utiliza los botones de navegación de nuestra aplicación para una mejor experiencia.</p>
+                <hr>
+                <p>Todo el contenido de esta página proviene de AnimeFlv y Crunchyroll. El objetivo de Ureshii Anime es únicamente evitar la publicidad y ofrecer mayor comodidad con funciones como "Mi lista" o marcar episodios como "Vistos", características que no están disponibles en AnimeFlv.</p>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="menu-button" id="menu-toggle">
+            <svg class="menu-ab-svg--wDGx3 header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="menu-svg" aria-hidden="true" role="img"><path class="menu-ab-svg__top--Xgjtj" d="M20 5H4V7H20V5Z"></path><path class="menu-ab-svg__middle--vsB5D" d="M4 11H20V13H4V11Z"></path><path class="menu-ab-svg__bottom--6yklx" d="M20 17H4V19H20V17Z"></path></svg>
+        </div>
+        <a href="index.html" class="header-logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="img/logo.png">
+                <source media="(min-width: 769px)" srcset="img/horizontal-logo.png">
+                <img src="img/horizontal-logo.png" alt="Ureshii Anime" class="logo-img">
+            </picture>
+        </a>
+        <div class="nav-categories">
+            <a href="index.html" class="nav-category">Catálogo</a>
+            <a href="novedades.html" class="nav-category">Novedades</a>
+        </div>
+        <div class="header-buttons">
+            <a href="search.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="search-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 19C12.4879 19 14.3164 18.3176 15.7641 17.1742L21.2927 22.7069L22.7074 21.2931L17.1778 15.7595C18.319 14.3126 19 12.4858 19 10.5C19 5.80558 15.1944 2 10.5 2C5.80558 2 2 5.80558 2 10.5C2 15.1944 5.80558 19 10.5 19ZM10.5 17C14.0899 17 17 14.0899 17 10.5C17 6.91015 14.0899 4 10.5 4C6.91015 4 4 6.91015 4 10.5C4 14.0899 6.91015 17 10.5 17Z"></path></svg>
+            </a>
+            <a href="ureshiilists.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="watchlist-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 20.5858C19.0001 21.4767 17.9229 21.9229 17.293 21.2929L12.0001 16L6.7071 21.2929C6.07714 21.9229 5 21.4767 5 20.5858L5.00006 3H19.0001V20.5858ZM7.00001 18.1716L7.00006 5H17.0001V18.1716L12.0001 13.1716L7.00001 18.1716Z"></path></svg>
+            </a>
+            <a href="account.html" class="export-button" id="export-import-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="user-settings-svg" aria-hidden="true" role="img"><path d="M12 20a6.01 6.01 0 0 1-5.966-5.355L12 12.088l5.966 2.557A6.01 6.01 0 0 1 12 20m0-16c1.654 0 3 1.346 3 3s-1.345 3-2.999 3h-.002A3.003 3.003 0 0 1 9 7c0-1.654 1.346-3 3-3m7.394 9.081l-4.572-1.959A4.997 4.997 0 0 0 17 7c0-2.757-2.243-5-5-5S7 4.243 7 7c0 1.71.865 3.22 2.178 4.122l-4.572 1.959A.999.999 0 0 0 4 14c0 4.411 3.589 8 8 8s8-3.589 8-8c0-.4-.238-.762-.606-.919"></path></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="hero-carousel" id="hero-carousel">
+    <div class="hero-slides" id="hero-slides">
+    </div>
+    <div class="hero-controls">
+    <div class="hero-dots" id="hero-dots">
+    </div>
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="section-title">
+    <h2>Catálogo</h2>
+    </div>
+    
+        <div class="anime-grid" id="anime-container">
+        </div>
+
+        <div class="load-more-container" id="load-more-container">
+            <button id="load-more-button" class="load-more-button">Mostrar más</button>
+        </div>
+
+        <div class="loading" id="loading">Cargando animes...</div>
+    </div>
+    
+    <div class="modal" id="anime-detail-modal">
+        <span class="close-modal" id="close-anime-detail">&times;</span>
+        <div class="modal-content">
+            <div class="anime-detail-view" id="anime-detail-container">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            Ureshii Anime - Developed by LutukiSolo
+            <p class="disclaimer">No se almacena ningún archivo en nuestros servidores. - El contenido proviene de AnimeFLV, no nos hacemos responsables.</p>
+        </div>
+    </footer>
+    
+    <script>
+        const animeContainer = document.getElementById('anime-container');
+        const loadingElement = document.getElementById('loading');
+        const animeDetailModal = document.getElementById('anime-detail-modal');
+        const closeAnimeDetail = document.getElementById('close-anime-detail');
+        const animeDetailContainer = document.getElementById('anime-detail-container');
+        const loadMoreContainer = document.getElementById('load-more-container');
+        const loadMoreButton = document.getElementById('load-more-button');
+        const watchedEpisodes = JSON.parse(localStorage.getItem(WATCHED_EPISODES_KEY)) || {};
+        const watchingAnimes = JSON.parse(localStorage.getItem(WATCHING_ANIMES_KEY)) || [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let displayedAnimes = 0;
+        
+        function getAnimesPerLoad() {
+            return window.innerWidth <= 768 ? 6 : 10;
+        }
+        
+        function displayAnimes() {
+            updateReleasedEpisodes();
+            
+            if (displayedAnimes === 0) {
+                animeContainer.innerHTML = '';
+            }
+            
+            loadingElement.style.display = 'none';
+    
+            const filteredAnimes = animeData;
+    
+            if (filteredAnimes.length === 0) {
+                animeContainer.innerHTML = '<div class="loading">No se encontraron animes</div>';
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+    
+            const animesPerLoad = getAnimesPerLoad();
+            
+            const startIndex = displayedAnimes;
+            const endIndex = Math.min(startIndex + animesPerLoad, filteredAnimes.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const anime = filteredAnimes[i];
+                
+                const animeCard = createAnimeCard(anime);
+                animeContainer.appendChild(animeCard);
+            }
+            
+            displayedAnimes = endIndex;
+            
+            if (displayedAnimes >= filteredAnimes.length) {
+                loadMoreContainer.style.display = 'none';
+            } else {
+                loadMoreContainer.style.display = 'flex';
+            }
+        }
+    
+        loadMoreButton.addEventListener('click', () => {
+            displayAnimes();
+        });
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            displayAnimes();
+        });
+
+    function initHeroCarousel() {
+        const heroSlides = document.getElementById('hero-slides');
+        const heroDots = document.getElementById('hero-dots');
+        
+        heroSlides.innerHTML = '';
+        heroDots.innerHTML = '';
+        
+        let currentSlide = 0;
+        let slideInterval;
+        let carouselAnimes = [];
+        
+        if (typeof carouselAnimeIds !== 'undefined' && carouselAnimeIds.length > 0) {
+            carouselAnimes = animeData.filter(anime => carouselAnimeIds.includes(anime.id));
+            
+            if (carouselAnimes.length < 6) {
+                const remainingCount = 6 - carouselAnimes.length;
+                const otherAnimes = animeData
+                    .filter(anime => !carouselAnimeIds.includes(anime.id) && anime.banner && anime.logo)
+                    .slice(0, remainingCount);
+                carouselAnimes = [...carouselAnimes, ...otherAnimes];
+            }
+        } else {
+            carouselAnimes = animeData
+                .filter(anime => anime.banner && anime.logo)
+                .slice(0, 6);
+        }
+        
+        carouselAnimes = carouselAnimes.slice(0, 6);
+        
+        carouselAnimes.forEach((anime, index) => {
+            const slide = document.createElement('div');
+            slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+            
+            const bg = document.createElement('img');
+            bg.className = 'hero-slide-bg';
+            
+            const updateBannerImage = () => {
+                if (window.innerWidth <= 768) {
+                    bg.src = (anime.banner || '').replace('backdrop_wide', 'backdrop_tall');
+                } else {
+                    bg.src = anime.banner || '';
+                }
+            };
+            
+            updateBannerImage();
+            
+            window.addEventListener('resize', updateBannerImage);
+            
+            bg.alt = anime.title;
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'hero-slide-overlay';
+            
+            const content = document.createElement('div');
+            content.className = 'hero-slide-content';
+            
+            const logo = document.createElement('img');
+            logo.className = 'hero-slide-logo';
+            logo.src = anime.logo || '';
+            logo.alt = anime.title;
+            logo.onclick = () => window.location.href = `anime.html?id=${anime.id}`;
+            logo.style.cursor = 'pointer';
+            
+            const tags = document.createElement('div');
+            tags.className = 'hero-slide-tags';
+            
+            if (anime.contentRating) {
+                const ratingTag = document.createElement('span');
+                ratingTag.className = 'hero-slide-tag rating';
+                ratingTag.textContent = anime.contentRating;
+                tags.appendChild(ratingTag);
+                
+                const separator = document.createElement('span');
+                separator.textContent = ' • ';
+                separator.style.color = '#b4b4b4';
+                tags.appendChild(separator);
+            }
+            
+            if (anime.subtitled && anime.dubbed) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Sub | Dob';
+                tags.appendChild(langTag);
+            } else if (anime.subtitled) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Subtitulado';
+                tags.appendChild(langTag);
+            } else if (anime.dubbed) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Doblado';
+                tags.appendChild(langTag);
+            }
+            
+            const description = document.createElement('p');
+            description.className = 'hero-slide-description';
+            description.textContent = anime.description || 'Sin descripción disponible';
+            
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.className = 'hero-slide-buttons';
+            
+            const playButton = document.createElement('button');
+            playButton.className = 'hero-slide-button play-button';
+            playButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER';
+            playButton.onclick = () => window.location.href = `anime.html?id=${anime.id}`;
+            
+            const addButton = document.createElement('button');
+            addButton.className = `hero-slide-button add-button ${anime.inMyList ? 'in-list' : ''}`;
+            addButton.setAttribute('data-anime-id', anime.id);
+            
+            const addButtonSvg = anime.inMyList ? 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z"></path></svg>' : 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18.113l-3.256-2.326A2.989 2.989 0 0 0 12 15.228c-.629 0-1.232.194-1.744.559L7 18.113V4h10v14.113zM18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z"></path></svg>';
+            
+            const tooltipText = anime.inMyList ? 'Eliminar de la lista' : 'Agregar a Ureshiilist';
+            addButton.innerHTML = `<span class="tooltip">${tooltipText}</span>${addButtonSvg}`;
+            
+            addButton.onclick = (e) => {
+                e.stopPropagation();
+                toggleMyList(anime.id);
+            };
+            
+            buttonsContainer.appendChild(playButton);
+            buttonsContainer.appendChild(addButton);
+            
+            content.appendChild(logo);
+            content.appendChild(tags);
+            content.appendChild(description);
+            content.appendChild(buttonsContainer);
+            
+            slide.appendChild(bg);
+            slide.appendChild(overlay);
+            slide.appendChild(content);
+            
+            heroSlides.appendChild(slide);
+            
+            const dot = document.createElement('div');
+            dot.className = `hero-dot ${index === 0 ? 'active' : ''}`;
+            dot.onclick = () => goToSlide(index);
+            
+            const progress = document.createElement('div');
+            progress.className = 'hero-dot-progress';
+            dot.appendChild(progress);
+            
+            heroDots.appendChild(dot);
+        });
+        
+        function goToSlide(index) {
+            document.querySelector('.hero-slide.active').classList.remove('active');
+            document.querySelector('.hero-dot.active').classList.remove('active');
+            
+            document.querySelectorAll('.hero-dot-progress').forEach(progress => {
+                progress.style.width = '0%';
+            });
+            
+            document.querySelectorAll('.hero-slide')[index].classList.add('active');
+            document.querySelectorAll('.hero-dot')[index].classList.add('active');
+            
+            currentSlide = index;
+            
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 10000);
+        }
+        
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % carouselAnimes.length;
+            goToSlide(nextIndex);
+        }
+        
+        slideInterval = setInterval(nextSlide, 10000);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        initHeroCarousel();
+        
+        if (typeof window.loadInitialDataFromDrive === 'function') {
+            window.loadInitialDataFromDrive();
+        }
+        
+        window.addEventListener('driveDataReady', function(event) {
+            console.log('Datos de Google Drive cargados en index.html:', event.detail);
+            if (typeof refreshContent === 'function') {
+                refreshContent();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar - Ureshii Anime</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ureshii Anime">
+    <script src="glob/localstorage.js"></script>
+    <script src="animes.js"></script>
+    <link rel="stylesheet" href="glob/header.css">
+    <script src="glob/header.js"></script>
+    <link rel="stylesheet" href="glob/cards.css">
+    <script src="glob/cards.js"></script>
+    <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+    <header>
+        <div class="menu-button" id="menu-toggle">
+            <svg class="menu-ab-svg--wDGx3 header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="menu-svg" aria-hidden="true" role="img"><path class="menu-ab-svg__top--Xgjtj" d="M20 5H4V7H20V5Z"></path><path class="menu-ab-svg__middle--vsB5D" d="M4 11H20V13H4V11Z"></path><path class="menu-ab-svg__bottom--6yklx" d="M20 17H4V19H20V17Z"></path></svg>
+        </div>
+        <a href="index.html" class="header-logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="img/logo.png">
+                <source media="(min-width: 769px)" srcset="img/horizontal-logo.png">
+                <img src="img/horizontal-logo.png" alt="Ureshii Anime" class="logo-img">
+            </picture>
+        </a>
+        <div class="nav-categories">
+            <a href="index.html" class="nav-category">Catálogo</a>
+            <a href="novedades.html" class="nav-category">Novedades</a>
+        </div>
+        <div class="header-buttons">
+            <a href="search.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="search-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 19C12.4879 19 14.3164 18.3176 15.7641 17.1742L21.2927 22.7069L22.7074 21.2931L17.1778 15.7595C18.319 14.3126 19 12.4858 19 10.5C19 5.80558 15.1944 2 10.5 2C5.80558 2 2 5.80558 2 10.5C2 15.1944 5.80558 19 10.5 19ZM10.5 17C14.0899 17 17 14.0899 17 10.5C17 6.91015 14.0899 4 10.5 4C6.91015 4 4 6.91015 4 10.5C4 14.0899 6.91015 17 10.5 17Z"></path></svg>
+            </a>
+            <a href="ureshiilists.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="watchlist-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 20.5858C19.0001 21.4767 17.9229 21.9229 17.293 21.2929L12.0001 16L6.7071 21.2929C6.07714 21.9229 5 21.4767 5 20.5858L5.00006 3H19.0001V20.5858ZM7.00001 18.1716L7.00006 5H17.0001V18.1716L12.0001 13.1716L7.00001 18.1716Z"></path></svg>
+            </a>
+            <a href="account.html" class="export-button" id="export-import-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="user-settings-svg" aria-hidden="true" role="img"><path d="M12 20a6.01 6.01 0 0 1-5.966-5.355L12 12.088l5.966 2.557A6.01 6.01 0 0 1 12 20m0-16c1.654 0 3 1.346 3 3s-1.345 3-2.999 3h-.002A3.003 3.003 0 0 1 9 7c0-1.654 1.346-3 3-3m7.394 9.081l-4.572-1.959A4.997 4.997 0 0 0 17 7c0-2.757-2.243-5-5-5S7 4.243 7 7c0 1.71.865 3.22 2.178 4.122l-4.572 1.959A.999.999 0 0 0 4 14c0 4.411 3.589 8 8 8s8-3.589 8-8c0-.4-.238-.762-.606-.919"></path></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="search-container">
+            <div class="search-input-container" id="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar...">
+                <div class="clear-button" id="clear-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.414 12l5.293-5.293a.999.999 0 1 0-1.414-1.414L12 10.586 6.707 5.293a.999.999 0 1 0-1.414 1.414L10.586 12l-5.293 5.293a.999.999 0 0 0 0 1.414.993.993 0 0 0 1.414 0L12 13.414l5.293 5.293a.999.999 0 1 0 1.414-1.414L13.414 12z"></path>
+                    </svg>
+                </div>
+                <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="filter-svg" aria-hidden="true" role="img">
+                    <path fill-rule="evenodd" d="M9 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2M3 8a1 1 0 0 1 0-2h2.142c.447-1.72 2-3 3.858-3s3.411 1.28 3.858 3H21a1 1 0 0 1 0 2h-8.142c-.447 1.72-2 3-3.858 3S5.589 9.72 5.142 8H3zm12 11c1.103 0 2-.897 2-2s-.897-2-2-2-2 .897-2 2 .897 2 2 2zm6-3a1 1 0 0 1 0 2h-2.142c-.447 1.72-2 3-3.858 3s-3.411-1.28-3.858-3H3a1 1 0 0 1 0-2h8.142c.447-1.72 2-3 3.858-3s3.411 1.28 3.858 3H21z"></path>
+                </svg>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <div class="filter-section">
+                        <h4 class="filter-title">Idioma:</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="radio" name="language" value="all" checked> Todo
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="language" value="sub"> Subtitulado
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="language" value="dub"> Doblado
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h4 class="filter-title">Edad:</h4>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="radio" name="age" value="all" checked> All
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="age" value="12"> +12
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="age" value="14"> +14
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="age" value="16"> +16
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="anime-grid" id="anime-grid"></div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const watchedEpisodes = JSON.parse(localStorage.getItem(WATCHED_EPISODES_KEY)) || {};
+        const watchingAnimes = JSON.parse(localStorage.getItem(WATCHING_ANIMES_KEY)) || [];
+
+        animeData.forEach(anime => {
+            anime.inMyList = window.myList.includes(anime.id);
+            anime.inFavorites = window.favorites.includes(anime.id);
+        });
+        
+        let searchQuery = '';
+        let searchTimeout = null;
+        
+        const searchInput = document.getElementById('search-input');
+        const searchContainer = document.getElementById('search-container');
+        const clearButton = document.getElementById('clear-button');
+        const animeGrid = document.getElementById('anime-grid');
+        
+        let selectedLanguage = 'all';
+        let selectedAge = 'all';
+        
+        const filterIcon = document.querySelector('.filter-icon');
+        const filterDropdown = document.getElementById('filter-dropdown');
+        
+        filterDropdown.style.display = 'none';
+        
+        filterIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (filterDropdown.style.display === 'none' || filterDropdown.style.display === '') {
+                filterDropdown.style.display = 'block';
+            } else {
+                filterDropdown.style.display = 'none';
+            }
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (!filterDropdown.contains(e.target) && e.target !== filterIcon) {
+                filterDropdown.style.display = 'none';
+            }
+        });
+        
+        document.querySelectorAll('input[name="language"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedLanguage = this.value;
+                applyFilters();
+            });
+        });
+        
+        document.querySelectorAll('input[name="age"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedAge = this.value;
+                applyFilters();
+            });
+        });
+        
+        function applyFilters() {
+            searchQuery = searchInput.value.trim();
+            displayFilteredAnimes();
+        }
+        
+        function getCardsPerRow() {
+            if (window.innerWidth <= 768) {
+                return 2;
+            } else if (window.innerWidth <= 1024) {
+                return 4;
+            } else if (window.innerWidth <= 1600) {
+                return 5;
+            } else {
+                return 6;
+            }
+        }
+        
+        function displayFilteredAnimes() {
+            animeGrid.innerHTML = '';
+            
+            let filteredAnimes = animeData;
+            
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filteredAnimes = filteredAnimes.filter(anime => {
+                    return anime.title.toLowerCase().includes(query) ||
+                           (anime.alternativeTitles && anime.alternativeTitles.some(title => title.toLowerCase().includes(query)));
+                });
+            } else {
+                const cardsPerRow = getCardsPerRow();
+                const maxCards = cardsPerRow * 2;
+                
+                const shuffledAnimes = [...animeData].sort(() => Math.random() - 0.5);
+                filteredAnimes = shuffledAnimes.slice(0, maxCards);
+            }
+            
+            if (selectedLanguage !== 'all') {
+                filteredAnimes = filteredAnimes.filter(anime => {
+                    if (selectedLanguage === 'sub') {
+                        return anime.subtitled;
+                    } else if (selectedLanguage === 'dub') {
+                        return anime.dubbed; 
+                    }
+                    return true;
+                });
+            }
+            
+            if (selectedAge !== 'all') {
+                const ageValue = parseInt(selectedAge);
+                filteredAnimes = filteredAnimes.filter(anime => {
+                    if (!anime.contentRating) return false;
+                    const animeAgeRating = parseInt(anime.contentRating.replace('+', ''));
+                    return animeAgeRating == ageValue;
+                });
+            }
+            
+            if (filteredAnimes.length === 0) {
+                animeGrid.className = 'anime-grid empty-results';
+                
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'empty-message';
+                
+                const emptySvg = document.createElement('div');
+                emptySvg.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="error-svg" aria-hidden="true" role="img" style="width: 120px; height: 120px; margin-bottom: 20px; fill: #aaa;">
+                        <path d="M12.049 17.984l.9 2.7a.999.999 0 0 1-.95 1.317c-.418 0-.808-.265-.948-.684l-.9-2.7a1.847 1.847 0 0 0-2.334-1.168l-2.701.9a1 1 0 0 1-.632-1.897l2.7-.9a3.85 3.85 0 0 1 4.865 2.432zm9.9-6.3a1 1 0 0 1-.632 1.265l-2.701.9a1.848 1.848 0 0 0-1.167 2.335l.9 2.7a.999.999 0 0 1-.95 1.317c-.418 0-.808-.265-.948-.684l-.9-2.7a3.85 3.85 0 0 1 2.433-4.865l2.7-.9a.998.998 0 0 1 1.265.632zm-13.5-4.5a3.85 3.85 0 0 1-2.432 4.865l-2.7.9a.999.999 0 0 1-1.265-.632.999.999 0 0 1 .632-1.265l2.7-.9a1.85 1.85 0 0 0 1.168-2.335l-.9-2.7a1 1 0 1 1 1.897-.633l.9 2.7zm3.502-1.167l-.9-2.7a.999.999 0 0 1 .632-1.265 1 1 0 0 1 1.266.632l.9 2.7a1.85 1.85 0 0 0 2.334 1.168l2.701-.9a1 1 0 0 1 .632 1.897l-2.7.9a3.832 3.832 0 0 1-1.213.198 3.854 3.854 0 0 1-3.652-2.63z"></path>
+                    </svg>
+                `;
+                
+                emptyMessage.appendChild(emptySvg);
+                
+                const messageText = document.createElement('div');
+                messageText.innerHTML = 'No se encontraron animes que coincidan con tu búsqueda.';
+                emptyMessage.appendChild(messageText);
+                
+                animeGrid.appendChild(emptyMessage);
+                
+                const supportMessage = document.createElement('div');
+                supportMessage.className = 'support-message';
+                supportMessage.innerHTML = 'Si <strong style="color: var(--primary-color); font-weight: normal;">no encuentras tu anime</strong> en nuestra página, puedes abrir un ticket en nuestro <a href="support.html">centro de soporte</a> y <strong style="color: var(--primary-color); font-weight: normal;">en menos de 24h</strong> tendrás tu anime disponible en nuestra página.';
+                animeGrid.appendChild(supportMessage);
+                
+                return;
+            }
+            
+            animeGrid.className = 'anime-grid';
+            
+            filteredAnimes.forEach(anime => {
+                const card = createAnimeCard(anime);
+                animeGrid.appendChild(card);
+            });
+        }
+        
+        function updateClearButtonVisibility() {
+            if (searchInput.value.trim() !== '') {
+                clearButton.classList.add('visible');
+            } else {
+                clearButton.classList.remove('visible');
+            }
+        }
+        
+        searchInput.addEventListener('input', () => {
+            updateClearButtonVisibility();
+            
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+            
+            searchTimeout = setTimeout(() => {
+                searchQuery = searchInput.value.trim();
+                displayFilteredAnimes();
+            }, 300);
+        });
+        
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('focused');
+        });
+        
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('focused');
+        });
+        
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            searchQuery = '';
+            updateClearButtonVisibility();
+            displayFilteredAnimes();
+            searchInput.focus();
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchQuery = searchInput.value.trim();
+                displayFilteredAnimes();
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            if (!searchQuery) {
+                displayFilteredAnimes();
+            }
+        });
+        
+        window.addEventListener('load', () => {
+            if (typeof window.loadInitialDataFromDrive === 'function') {
+                window.loadInitialDataFromDrive();
+            }
+            
+            updateReleasedEpisodes();
+            displayFilteredAnimes();
+            updateClearButtonVisibility();
+        });
+        
+        window.addEventListener('driveDataReady', function(event) {
+            console.log('Datos de Google Drive cargados en search.html:', event.detail);
+            displayFilteredAnimes();
+        });
+    </script>
+</body>
+</html>

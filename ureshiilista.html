@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UreshiiLista - Ureshii Anime</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ureshii Anime">
+    <script src="glob/localstorage.js"></script>
+    <script src="animes.js"></script>
+    <link rel="stylesheet" href="glob/header.css">
+    <script src="glob/header.js"></script>
+    <link rel="stylesheet" href="glob/cards.css">
+    <script src="glob/cards.js"></script>
+    <link rel="stylesheet" href="css/ureshiilista.css">
+</head>
+<body>
+    <header>
+        <div class="menu-button" id="menu-toggle">
+            <svg class="menu-ab-svg--wDGx3 header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="menu-svg" aria-hidden="true" role="img"><path class="menu-ab-svg__top--Xgjtj" d="M20 5H4V7H20V5Z"></path><path class="menu-ab-svg__middle--vsB5D" d="M4 11H20V13H4V11Z"></path><path class="menu-ab-svg__bottom--6yklx" d="M20 17H4V19H20V17Z"></path></svg>
+        </div>
+        <a href="index.html" class="header-logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="img/logo.png">
+                <source media="(min-width: 769px)" srcset="img/horizontal-logo.png">
+                <img src="img/horizontal-logo.png" alt="Ureshii Anime" class="logo-img">
+            </picture>
+        </a>
+        <div class="nav-categories">
+            <a href="index.html" class="nav-category">Catálogo</a>
+            <a href="novedades.html" class="nav-category">Novedades</a>
+        </div>
+        <div class="header-buttons">
+            <a href="search.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="search-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 19C12.4879 19 14.3164 18.3176 15.7641 17.1742L21.2927 22.7069L22.7074 21.2931L17.1778 15.7595C18.319 14.3126 19 12.4858 19 10.5C19 5.80558 15.1944 2 10.5 2C5.80558 2 2 5.80558 2 10.5C2 15.1944 5.80558 19 10.5 19ZM10.5 17C14.0899 17 17 14.0899 17 10.5C17 6.91015 14.0899 4 10.5 4C6.91015 4 4 6.91015 4 10.5C4 14.0899 6.91015 17 10.5 17Z"></path></svg>
+            </a>
+            <a href="ureshiilists.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="watchlist-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 20.5858C19.0001 21.4767 17.9229 21.9229 17.293 21.2929L12.0001 16L6.7071 21.2929C6.07714 21.9229 5 21.4767 5 20.5858L5.00006 3H19.0001V20.5858ZM7.00001 18.1716L7.00006 5H17.0001V18.1716L12.0001 13.1716L7.00001 18.1716Z"></path></svg>
+            </a>
+            <a href="account.html" class="export-button" id="export-import-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="user-settings-svg" aria-hidden="true" role="img"><path d="M12 20a6.01 6.01 0 0 1-5.966-5.355L12 12.088l5.966 2.557A6.01 6.01 0 0 1 12 20m0-16c1.654 0 3 1.346 3 3s-1.345 3-2.999 3h-.002A3.003 3.003 0 0 1 9 7c0-1.654 1.346-3 3-3m7.394 9.081l-4.572-1.959A4.997 4.997 0 0 0 17 7c0-2.757-2.243-5-5-5S7 4.243 7 7c0 1.71.865 3.22 2.178 4.122l-4.572 1.959A.999.999 0 0 0 4 14c0 4.411 3.589 8 8 8s8-3.589 8-8c0-.4-.238-.762-.606-.919"></path></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="list-header">
+            <a href="ureshiilists.html" class="back-button" id="back-button">
+                <svg class="angle--pJ1yZ angle--is-left--j9YOy navigation-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="angle-left-svg" aria-hidden="true" role="img">
+                    <path d="M8.6 7.4L10 6l6 6-6 6-1.4-1.4 4.6-4.6z"></path>
+                </svg>
+                VOLVER A URESHIILISTAS
+            </a>
+            <button class="settings-button" id="settings-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+            </button>
+            <div class="dropdown-menu" id="settings-menu">
+                <div class="dropdown-item" id="rename-list">Renombrar la UreshiiList</div>
+                <div class="dropdown-item" id="delete-list">Eliminar la UreshiiList</div>
+            </div>
+        </div>
+        
+        <h2 class="list-title" id="list-title">Nombre de la Lista</h2>
+        
+        <div class="search-container">
+            <div class="search-input-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar en la lista...">
+            </div>
+        </div>
+        
+        <div class="anime-grid" id="anime-grid"></div>
+    </div>
+    
+    <div id="rename-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h3>Renombrar UreshiiLista</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-list-name">Nuevo nombre</label>
+                    <input type="text" id="new-list-name" class="form-control">
+                    <div id="rename-error" class="error-message">Por favor, introduce un nombre para la lista</div>
+                </div>
+                <div class="modal-buttons">
+                    <button id="rename-confirm" class="modal-button confirm-button">GUARDAR</button>
+                    <button id="rename-cancel" class="modal-button cancel-button">CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h3>Eliminar UreshiiLista</h3>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar esta lista? Esta acción no se puede deshacer.</p>
+                <div class="modal-buttons">
+                    <button id="delete-confirm" class="modal-button confirm-button">ELIMINAR</button>
+                    <button id="delete-cancel" class="modal-button cancel-button">CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="favorites-notification">
+        <div class="favorites-notification-content">
+            Acción completada correctamente
+        </div>
+    </div>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const listId = urlParams.get('id');
+        
+        let ureshiiLists = JSON.parse(localStorage.getItem(URESHII_LISTS_KEY)) || [];
+        
+        const currentList = ureshiiLists.find(list => list.id === listId);
+        
+        const listTitle = document.getElementById('list-title');
+        const animeGrid = document.getElementById('anime-grid');
+        const backButton = document.getElementById('back-button');
+        const settingsButton = document.getElementById('settings-button');
+        const settingsMenu = document.getElementById('settings-menu');
+        const renameList = document.getElementById('rename-list');
+        const deleteList = document.getElementById('delete-list');
+        const renameModal = document.getElementById('rename-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const newListName = document.getElementById('new-list-name');
+        const renameConfirm = document.getElementById('rename-confirm');
+        const renameCancel = document.getElementById('rename-cancel');
+        const deleteConfirm = document.getElementById('delete-confirm');
+        const deleteCancel = document.getElementById('delete-cancel');
+        const searchInput = document.getElementById('search-input');
+        const closeButtons = document.querySelectorAll('.close');
+        
+        const addStyles = () => {
+            if (!document.getElementById('delete-button-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'delete-button-styles';
+                document.head.appendChild(styles);
+            }
+        };
+        
+        function removeAnimeFromList(animeId) {
+            const animeLists = ureshiiLists.filter(list => list.items.includes(Number(animeId)));
+            
+            if (animeLists.length === 1 && animeLists[0].id === currentList.id) {
+                const index = currentList.items.indexOf(Number(animeId));
+                if (index !== -1) {
+                    const animeCards = document.querySelectorAll('.anime-card');
+                    let cardToRemove = null;
+                    animeCards.forEach(card => {
+                        if (Number(card.dataset.animeId) === Number(animeId)) {
+                            cardToRemove = card;
+                        }
+                    });
+                    
+                    if (cardToRemove) {
+                        cardToRemove.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                        cardToRemove.style.opacity = '0';
+                        cardToRemove.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            cardToRemove.remove();
+                            if (animeGrid.children.length === 0) {
+                                displayAnimes();
+                            }
+                        }, 300);
+                    }
+                    
+                    currentList.items.splice(index, 1);
+                    currentList.updatedAt = new Date().toISOString();
+                    
+                    localStorage.setItem(URESHII_LISTS_KEY, JSON.stringify(ureshiiLists));
+                    
+                    const isInOtherLists = ureshiiLists.some(list => list.id !== currentList.id && list.items.includes(Number(animeId)));
+                    if (!isInOtherLists) {
+                        let myList = JSON.parse(localStorage.getItem(MY_LIST_KEY)) || [];
+                        const myListIndex = myList.indexOf(Number(animeId));
+                        if (myListIndex !== -1) {
+                            myList.splice(myListIndex, 1);
+                            localStorage.setItem(MY_LIST_KEY, JSON.stringify(myList));
+                            window.myList = myList;
+                            
+                            const anime = animeData.find(a => a.id === animeId);
+                            if (anime) {
+                                anime.inMyList = false;
+                            }
+                        }
+                    }
+                    
+                    showNotification('Anime eliminado de la lista');
+                }
+            } else {
+                showMultiListDeleteModal(animeId, animeLists);
+            }
+        }
+        
+        function showMultiListDeleteModal(animeId, lists) {
+            let multiListDeleteModal = document.getElementById('multi-list-delete-modal');
+            if (!multiListDeleteModal) {
+                multiListDeleteModal = document.createElement('div');
+                multiListDeleteModal.id = 'multi-list-delete-modal';
+                multiListDeleteModal.className = 'modal';
+                
+                multiListDeleteModal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="modal-header">
+                            <h3>Eliminar de listas</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Este anime está en varias listas. Selecciona de cuál quieres eliminarlo:</p>
+                            <div id="multi-list-container" class="lists-container"></div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(multiListDeleteModal);
+                
+                const closeButton = multiListDeleteModal.querySelector('.close');
+                closeButton.addEventListener('click', () => {
+                    multiListDeleteModal.style.display = 'none';
+                });
+                
+                window.addEventListener('click', (e) => {
+                    if (e.target === multiListDeleteModal) {
+                        multiListDeleteModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            const listsContainer = multiListDeleteModal.querySelector('#multi-list-container');
+            listsContainer.innerHTML = '';
+            
+            lists.forEach(list => {
+                const listItem = document.createElement('div');
+                listItem.className = 'list-item-with-delete';
+                
+                const listName = document.createElement('div');
+                listName.className = 'list-name';
+                listName.textContent = list.name;
+                
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-from-list-button';
+                deleteButton.innerHTML = `
+                    <span class="tooltip">Eliminar</span>
+                    <svg class="custom-list-card-delete-button__icon--pENvJ" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="trash-svg" aria-hidden="true" role="img">
+                        <path d="M13 2h-2a1 1 0 0 0-1 1v1H4a1 1 0 0 0 0 2h1v15a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6h1a1 1 0 1 0 0-2h-6V3a1 1 0 0 0-1-1m-1 2v2h5v14H7V6h5V4zm-2 5a1 1 0 0 0-1 1v6a1 1 0 1 0 2 0v-6a1 1 0 0 0-1-1zm4 0a1 1 0 0 0-1 1v6a1 1 0 1 0 2 0v-6a1 1 0 0 0-1-1z"></path>
+                    </svg>
+                `;
+                
+                deleteButton.addEventListener('click', () => {
+                    const index = list.items.indexOf(Number(animeId));
+                    if (index !== -1) {
+                        list.items.splice(index, 1);
+                        list.updatedAt = new Date().toISOString();
+                        
+                        localStorage.setItem(URESHII_LISTS_KEY, JSON.stringify(ureshiiLists));
+                        
+                        const isInAnyList = ureshiiLists.some(l => l.items.includes(Number(animeId)));
+                        if (!isInAnyList) {
+                            let myList = JSON.parse(localStorage.getItem(MY_LIST_KEY)) || [];
+                            const myListIndex = myList.indexOf(Number(animeId));
+                            if (myListIndex !== -1) {
+                                myList.splice(myListIndex, 1);
+                                localStorage.setItem(MY_LIST_KEY, JSON.stringify(myList));
+                                window.myList = myList;
+                                
+                                const anime = animeData.find(a => Number(a.id) === Number(animeId));
+                                if (anime) {
+                                    anime.inMyList = false;
+                                }
+                            }
+                        }
+                        
+                        if (list.id === currentList.id) {
+                            const animeCards = document.querySelectorAll('.anime-card');
+                            let cardToRemove = null;
+                            animeCards.forEach(card => {
+                                if (Number(card.dataset.animeId) === Number(animeId)) {
+                                    cardToRemove = card;
+                                }
+                            });
+                            
+                            if (cardToRemove) {
+                                cardToRemove.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                                cardToRemove.style.opacity = '0';
+                                cardToRemove.style.transform = 'scale(0.9)';
+                                setTimeout(() => {
+                                    cardToRemove.remove();
+                                    if (animeGrid.children.length === 0) {
+                                        displayAnimes();
+                                    }
+                                }, 300);
+                            }
+                        }
+                        
+                        listItem.remove();
+                        
+                        if (listsContainer.children.length === 0) {
+                            multiListDeleteModal.style.display = 'none';
+                        }
+                        
+                        showNotification('Anime eliminado de la lista');
+                    }
+                });
+                
+                listItem.appendChild(listName);
+                listItem.appendChild(deleteButton);
+                
+                listsContainer.appendChild(listItem);
+            });
+            
+            multiListDeleteModal.style.display = 'block';
+        }
+        
+        function initPage() {
+            if (!currentList) {
+                window.location.href = 'ureshiilists.html';
+                return;
+            }
+            
+            listTitle.textContent = currentList.name;
+            
+            addStyles();
+            
+            displayAnimes();
+            
+            const newListName = sessionStorage.getItem('newListName');
+            if (newListName) {
+                setTimeout(() => {
+                    showNotification(`"${newListName}" creada correctamente`);
+                    sessionStorage.removeItem('newListName');
+                }, 100);
+            }
+        }
+        
+        function displayAnimes() {
+            animeGrid.innerHTML = '';
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            let filteredAnimes = [];
+            
+            if (currentList && currentList.items && currentList.items.length > 0) {
+                const animeIds = currentList.items.map(id => Number(id));
+                
+                filteredAnimes = animeData.filter(anime => {
+                    return animeIds.includes(Number(anime.id)) && 
+                           (searchTerm === '' || anime.title.toLowerCase().includes(searchTerm));
+                });
+            }
+            
+            if (filteredAnimes.length === 0) { 
+            animeGrid.className = 'anime-grid empty-results'; 
+            
+            const emptyMessage = document.createElement('div'); 
+            emptyMessage.className = 'empty-message'; 
+            
+            const emptySvg = document.createElement('div'); 
+            emptySvg.innerHTML = ` 
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="error-svg" aria-hidden="true" role="img" style="width: 120px; height: 120px; margin-bottom: 20px; fill: #aaa;"> 
+            <path d="M12.049 17.984l.9 2.7a.999.999 0 0 1-.95 1.317c-.418 0-.808-.265-.948-.684l-.9-2.7a1.847 1.847 0 0 0-2.334-1.168l-2.701.9a1 1 0 0 1-.632-1.897l2.7-.9a3.85 3.85 0 0 1 4.865 2.432zm9.9-6.3a1 1 0 0 1-.632 1.265l-2.701.9a1.848 1.848 0 0 0-1.167 2.335l.9 2.7a.999.999 0 0 1-.95 1.317c-.418 0-.808-.265-.948-.684l-.9-2.7a3.85 3.85 0 0 1 2.433-4.865l2.7-.9a.998.998 0 0 1 1.265.632zm-13.5-4.5a3.85 3.85 0 0 1-2.432 4.865l-2.7.9a.999.999 0 0 1-1.265-.632.999.999 0 0 1 .632-1.265l2.7-.9a1.85 1.85 0 0 0 1.168-2.335l-.9-2.7a1 1 0 1 1 1.897-.633l.9 2.7zm3.502-1.167l-.9-2.7a.999.999 0 0 1 .632-1.265 1 1 0 0 1 1.266.632l.9 2.7a1.85 1.85 0 0 0 2.334 1.168l2.701-.9a1 1 0 0 1 .632 1.897l-2.7.9a3.832 3.832 0 0 1-1.213.198 3.854 3.854 0 0 1-3.652-2.63z"></path> 
+            </svg> 
+            `; 
+            
+            emptyMessage.appendChild(emptySvg); 
+            
+            const messageText = document.createElement('div'); 
+            if (searchTerm) { 
+            messageText.textContent = 'No se encontraron resultados para tu búsqueda.'; 
+            } else { 
+            messageText.innerHTML = 'Puedes añadir elementos a esta UreshiiLista usando la <a href="search.html" class="empty-link">búsqueda</a> o desde la <a href="index.html" class="empty-link">página de cualquier anime</a>.'; 
+
+            } 
+            
+            emptyMessage.appendChild(messageText); 
+            animeGrid.appendChild(emptyMessage); 
+            return; 
+            } else {
+                animeGrid.className = 'anime-grid';
+            }
+            
+            filteredAnimes.forEach(anime => {
+                const card = createAnimeCard(anime);
+                
+                animeGrid.appendChild(card);
+            });
+        }
+        
+        searchInput.addEventListener('input', () => {
+            displayAnimes();
+        });
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationContent = notification.querySelector('.favorites-notification-content');
+            
+            notificationContent.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        initPage();
+
+        let errorNotification = document.createElement('div'); 
+        errorNotification.id = 'ureshii-error-notification'; 
+        document.body.appendChild(errorNotification); 
+        
+        function showErrorMessage(errorElement) { 
+            if (errorElement.closest('.modal')) { 
+                errorElement.classList.add('show'); 
+                
+                setTimeout(() => { 
+                    errorElement.classList.remove('show'); 
+                }, 5000); 
+            } else { 
+                errorNotification.textContent = errorElement.textContent; 
+                errorNotification.classList.add('show'); 
+                
+                setTimeout(() => { 
+                    errorNotification.classList.remove('show'); 
+                }, 5000); 
+            } 
+        } 
+        
+        settingsButton.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            
+            if (settingsMenu.classList.contains('show')) { 
+                settingsMenu.classList.remove('show'); 
+            } else { 
+                document.querySelectorAll('.dropdown-menu.show').forEach(menu => { 
+                    if (menu !== settingsMenu) { 
+                        menu.classList.remove('show'); 
+                    } 
+                }); 
+                
+                settingsMenu.classList.add('show'); 
+                
+                const rect = settingsButton.getBoundingClientRect(); 
+                settingsMenu.style.position = 'fixed'; 
+                settingsMenu.style.top = `${rect.bottom}px`; 
+                settingsMenu.style.right = `${window.innerWidth - rect.right}px`; 
+            } 
+        }); 
+        
+        const settingsSvg = settingsButton.querySelector('svg'); 
+        const settingsSvgPath = settingsButton.querySelector('svg path'); 
+        
+        if (settingsSvg) { 
+            settingsSvg.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                settingsButton.click(); 
+            }); 
+        } 
+        
+        if (settingsSvgPath) { 
+            settingsSvgPath.addEventListener('click', (e) => { 
+                e.stopPropagation(); 
+                settingsButton.click(); 
+            }); 
+        } 
+        
+        renameList.addEventListener('click', () => { 
+            renameModal.style.display = 'block'; 
+            newListName.value = currentList.name; 
+            settingsMenu.classList.remove('show'); 
+        }); 
+        
+        deleteList.addEventListener('click', () => { 
+            deleteModal.style.display = 'block'; 
+            settingsMenu.classList.remove('show'); 
+        }); 
+        
+        document.addEventListener('click', () => { 
+            settingsMenu.classList.remove('show'); 
+        }); 
+        
+        renameCancel.addEventListener('click', () => { 
+            renameModal.style.display = 'none'; 
+            document.getElementById('rename-error').classList.remove('show'); 
+        }); 
+        
+        renameConfirm.addEventListener('click', () => { 
+            const newName = newListName.value.trim(); 
+            const errorMessage = document.getElementById('rename-error'); 
+            
+            if (!newName) { 
+                showErrorMessage(errorMessage); 
+                return; 
+            } 
+            
+            errorMessage.classList.remove('show'); 
+            
+            currentList.name = newName; 
+            currentList.updatedAt = new Date().toISOString(); 
+            
+            listTitle.textContent = newName; 
+            
+            localStorage.setItem(URESHII_LISTS_KEY, JSON.stringify(ureshiiLists)); 
+            
+            renameModal.style.display = 'none'; 
+            
+            showNotification('Lista renombrada correctamente'); 
+        }); 
+        
+        deleteCancel.addEventListener('click', () => { 
+            deleteModal.style.display = 'none'; 
+        }); 
+        
+        deleteConfirm.addEventListener('click', () => { 
+            const listIndex = ureshiiLists.findIndex(list => list.id === listId); 
+            
+            if (listIndex !== -1) { 
+                const animesInList = [...ureshiiLists[listIndex].items];
+                
+                ureshiiLists.splice(listIndex, 1); 
+                
+                let myList = JSON.parse(localStorage.getItem(MY_LIST_KEY)) || [];
+                
+                animesInList.forEach(animeId => {
+                    const isInOtherLists = ureshiiLists.some(list => list.items.includes(Number(animeId)));
+                    
+                    if (!isInOtherLists) {
+                        const myListIndex = myList.indexOf(Number(animeId));
+                        if (myListIndex !== -1) {
+                            myList.splice(myListIndex, 1);
+                            
+                            const anime = animeData.find(a => a.id === animeId);
+                            if (anime) {
+                                anime.inMyList = false;
+                            }
+                        }
+                    }
+                });
+                
+                localStorage.setItem(MY_LIST_KEY, JSON.stringify(myList));
+                window.myList = myList;
+                
+                localStorage.setItem(URESHII_LISTS_KEY, JSON.stringify(ureshiiLists)); 
+                
+                window.location.href = 'ureshiilists.html'; 
+            } 
+        }); 
+        
+        closeButtons.forEach(button => { 
+            button.addEventListener('click', () => { 
+                renameModal.style.display = 'none'; 
+                deleteModal.style.display = 'none'; 
+                document.getElementById('rename-error').classList.remove('show'); 
+            }); 
+        }); 
+        
+        window.addEventListener('click', (e) => { 
+            if (e.target === renameModal) { 
+                renameModal.style.display = 'none'; 
+                document.getElementById('rename-error').classList.remove('show'); 
+            } 
+            if (e.target === deleteModal) { 
+                deleteModal.style.display = 'none'; 
+            } 
+        });
+        
+        if (typeof window.loadInitialDataFromDrive === 'function') {
+            window.loadInitialDataFromDrive();
+        }
+        
+        window.addEventListener('driveDataReady', function(event) {
+            console.log('Datos de Google Drive cargados en ureshiilista.html:', event.detail);
+            if (typeof displayList === 'function') {
+                displayList();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+

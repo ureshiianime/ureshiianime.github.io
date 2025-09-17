@@ -1,0 +1,161 @@
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px !important;
+            margin-top: 30px !important;
+        }
+        
+        .title-icon {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+            fill: white;
+            position: relative;
+            top: -12px !important;
+        }
+        
+        h2.section-title {
+            font-weight: normal;
+            font-size: 28px;
+        }
+        
+        
+        .tab-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        
+        .tab-button {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 20px;
+            font-size: 16px;
+            color: var(--text-color);
+            position: relative;
+            transition: all 0.3s ease;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+        
+        .tab-button:hover {
+            color: var(--accent-color);
+        }
+        
+        .tab-button.active {
+            color: var(--accent-color);
+            font-weight: normal;
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        
+        .anime-grid.empty-results {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 2rem 1rem 0.5rem 1rem;
+            color: #aaa;
+            font-size: 1.2rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+            line-height: 1.4;
+            min-height: auto;
+            background-color: transparent;
+            border-radius: 0;
+        }
+        
+        .removed-message {
+            text-align: center;
+            padding: 1rem;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 1rem auto;
+            display: none;
+            line-height: 1.4;
+            background-color: rgba(255, 69, 58, 0.1);
+            border-radius: 8px;
+            animation: fadeOut 3s forwards;
+            animation-delay: 2s;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; display: none; }
+        }
+        
+        @media (min-width: 1600px) {
+            h2.section-title {
+                font-size: 42px !important;
+            }
+            
+            .title-icon {
+                width: 45px !important;
+                height: 45px !important;
+                top: -18px !important;
+                margin-right: 15px !important;
+            }
+            
+            .tab-button {
+                font-size: 28px !important;
+                padding: 20px 35px !important;
+                font-weight: 500 !important;
+            }
+            
+            .tab-button.active::after {
+                height: 5px !important;
+            }
+            
+            .empty-message {
+                font-size: 1.6rem;
+                max-width: 800px;
+                padding: 2.5rem 1.5rem 1rem 1.5rem;
+            }
+            
+            .removed-message {
+                font-size: 1.4rem;
+                max-width: 800px;
+                padding: 1.5rem;
+            }
+            
+            .anime-grid {
+                gap: 15px;
+                padding: 0 30px;
+            }
+            
+            .anime-grid.empty-results {
+                min-height: 400px;
+            }
+        }

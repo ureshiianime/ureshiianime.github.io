@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ureshii Anime</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ureshii Anime">
+    <script src="glob/localstorage.js"></script>
+    <script src="glob/google-drive.js"></script>
+    <script src="animes.js"></script>
+    <script src="glob/cards.js"></script>
+    <script src="glob/header.js"></script>
+    <link rel="stylesheet" href="css/anime.css">
+    <link rel="stylesheet" href="glob/cards.css">
+    <link rel="stylesheet" href="glob/header.css">
+
+
+</head>
+<body>
+    <header>
+        <div class="menu-button" id="menu-toggle">
+            <svg class="menu-ab-svg--wDGx3 header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="menu-svg" aria-hidden="true" role="img"><path class="menu-ab-svg__top--Xgjtj" d="M20 5H4V7H20V5Z"></path><path class="menu-ab-svg__middle--vsB5D" d="M4 11H20V13H4V11Z"></path><path class="menu-ab-svg__bottom--6yklx" d="M20 17H4V19H20V17Z"></path></svg>
+        </div>
+        <a href="index.html" class="header-logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="img/logo.png">
+                <source media="(min-width: 769px)" srcset="img/horizontal-logo.png">
+                <img src="img/horizontal-logo.png" alt="Ureshii Anime" class="logo-img">
+            </picture>
+        </a>
+        <div class="nav-categories">
+            <a href="index.html" class="nav-category">Catálogo</a>
+            <a href="novedades.html" class="nav-category">Novedades</a>
+        </div>
+        <div class="header-buttons">
+            <a href="search.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="search-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 19C12.4879 19 14.3164 18.3176 15.7641 17.1742L21.2927 22.7069L22.7074 21.2931L17.1778 15.7595C18.319 14.3126 19 12.4858 19 10.5C19 5.80558 15.1944 2 10.5 2C5.80558 2 2 5.80558 2 10.5C2 15.1944 5.80558 19 10.5 19ZM10.5 17C14.0899 17 17 14.0899 17 10.5C17 6.91015 14.0899 4 10.5 4C6.91015 4 4 6.91015 4 10.5C4 14.0899 6.91015 17 10.5 17Z"></path></svg>
+            </a>
+            <a href="ureshiilists.html" class="header-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="watchlist-svg" aria-hidden="true" role="img"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 20.5858C19.0001 21.4767 17.9229 21.9229 17.293 21.2929L12.0001 16L6.7071 21.2929C6.07714 21.9229 5 21.4767 5 20.5858L5.00006 3H19.0001V20.5858ZM7.00001 18.1716L7.00006 5H17.0001V18.1716L12.0001 13.1716L7.00001 18.1716Z"></path></svg>
+            </a>
+            <a href="account.html" class="export-button" id="export-import-button">
+                <svg class="header-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="user-settings-svg" aria-hidden="true" role="img"><path d="M12 20a6.01 6.01 0 0 1-5.966-5.355L12 12.088l5.966 2.557A6.01 6.01 0 0 1 12 20m0-16c1.654 0 3 1.346 3 3s-1.345 3-2.999 3h-.002A3.003 3.003 0 0 1 9 7c0-1.654 1.346-3 3-3m7.394 9.081l-4.572-1.959A4.997 4.997 0 0 0 17 7c0-2.757-2.243-5-5-5S7 4.243 7 7c0 1.71.865 3.22 2.178 4.122l-4.572 1.959A.999.999 0 0 0 4 14c0 4.411 3.589 8 8 8s8-3.589 8-8c0-.4-.238-.762-.606-.919"></path></svg>
+            </a>
+        </div>
+    </header>
+
+    <div id="anime-detail-container"></div>
+
+
+    <script>
+        const watchedEpisodes = JSON.parse(localStorage.getItem(WATCHED_EPISODES_KEY)) || {};
+        myList = window.myList || JSON.parse(localStorage.getItem(MY_LIST_KEY)) || [];
+        const watchingAnimes = JSON.parse(localStorage.getItem(WATCHING_ANIMES_KEY)) || [];
+        
+        function readSeasonState() {
+            try {
+                return JSON.parse(localStorage.getItem(SEASON_COLLAPSE_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+        function writeSeasonState(obj) {
+            try {
+                localStorage.setItem(SEASON_COLLAPSE_KEY, JSON.stringify(obj));
+            } catch (e) { }
+        }
+        function isSeasonCollapsed(animeId, seasonNumber) {
+            const map = readSeasonState();
+            return !!map[`${animeId}_${seasonNumber}`];
+        }
+        function setSeasonCollapsed(animeId, seasonNumber, collapsed) {
+            const map = readSeasonState();
+            const key = `${animeId}_${seasonNumber}`;
+            if (collapsed) map[key] = true;
+            else delete map[key];
+            writeSeasonState(map);
+        }
+        
+        const animeDetailContainer = document.getElementById('anime-detail-container');
+        const backButton = document.getElementById('back-button');
+        const siteTitle = document.getElementById('site-title');
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const animeId = parseInt(urlParams.get('id'));
+        
+        if (siteTitle) {
+            siteTitle.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+            siteTitle.style.cursor = 'pointer';
+        }
+        
+        function getGlobalEpisodeNumber(anime, seasonNumber, episodeNumber) {
+            let globalEpisode = episodeNumber;
+            
+            for (let i = 0; i < anime.seasons.length; i++) {
+                const season = anime.seasons[i];
+                if (season.number < seasonNumber) {
+                    globalEpisode += season.episodes;
+                }
+            }
+            
+            return globalEpisode;
+        }
+        
+        function isEpisodeWatched(animeId, episodeNumber) {
+            return watchedEpisodes[animeId] && watchedEpisodes[animeId].includes(episodeNumber);
+        }
+        
+        function markEpisodeAsWatched(animeId, episodeNumber) {
+            if (!watchedEpisodes[animeId]) {
+                watchedEpisodes[animeId] = [];
+            }
+            
+            if (!watchedEpisodes[animeId].includes(episodeNumber)) {
+                watchedEpisodes[animeId].push(episodeNumber);
+                localStorage.setItem(WATCHED_EPISODES_KEY, JSON.stringify(watchedEpisodes));
+                
+                if (!watchingAnimes.includes(animeId)) {
+                    watchingAnimes.push(animeId);
+                    localStorage.setItem(WATCHING_ANIMES_KEY, JSON.stringify(watchingAnimes));
+                }
+            }
+        }
+        
+        function unwatchEpisode(animeId, episodeNumber) {
+            if (watchedEpisodes[animeId] && watchedEpisodes[animeId].includes(episodeNumber)) {
+                watchedEpisodes[animeId] = watchedEpisodes[animeId].filter(ep => ep !== episodeNumber);
+                localStorage.setItem(WATCHED_EPISODES_KEY, JSON.stringify(watchedEpisodes));
+            }
+        }
+        
+        function toggleMyList(animeId) {
+            const index = myList.indexOf(animeId);
+            if (index === -1) {
+                myList.push(animeId);
+                const anime = animeData.find(a => a.id === animeId);
+                if (anime) {
+                    anime.inMyList = true;
+                }
+            } else {
+                myList.splice(index, 1);
+                const anime = animeData.find(a => a.id === animeId);
+                if (anime) {
+                    anime.inMyList = false;
+                }
+            }
+            
+            localStorage.setItem(MY_LIST_KEY, JSON.stringify(myList));
+            
+            const addToListButtons = document.querySelectorAll(`.add-to-list[data-anime-id="${animeId}"]`);
+            addToListButtons.forEach(button => {
+                if (myList.includes(animeId)) {
+                    button.classList.add('in-list');
+                } else {
+                    button.classList.remove('in-list');
+                }
+            });
+        }
+
+        function openEpisode(anime, episodeGlobalNumber, seasonNumber, episodeInSeason, seasonSlug) {
+            const viewerUrl = `viewer.html?id=${anime.id}&season=${seasonNumber}&episode=${episodeInSeason}`;
+            
+            markEpisodeAsWatched(anime.id, episodeGlobalNumber);
+            
+            window.location.href = viewerUrl;
+        }
+        
+        function getSourceData(){
+            if (typeof animeData !== 'undefined' && Array.isArray(animeData)) return animeData;
+            if (Array.isArray(window.animeData)) return window.animeData;
+            return [];
+        }
+
+        function checkAndUnlockEpisodes() {
+            const dataArray = getSourceData();
+            if (!Array.isArray(dataArray) || dataArray.length === 0) {
+                console.warn("Error: animeData no es un array o no está definido");
+                return;
+            }
+            
+            const now = new Date();
+            const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const currentDateFormatted = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+            
+            console.log("Fecha actual del sistema:", currentDateFormatted);
+            
+            let dataChanged = false;
+            
+            try {
+                dataArray.forEach(anime => {
+                    anime.seasons.forEach(season => {
+                        if (season.newEpisode) {
+                            const originalDate = season.newEpisode.date;
+                            
+                            const initialDateParts = originalDate.split('-');
+                            if (initialDateParts.length === 3) {
+                                const initialDate = new Date(Date.UTC(
+                                    parseInt(initialDateParts[0]),
+                                    parseInt(initialDateParts[1]) - 1,
+                                    parseInt(initialDateParts[2])
+                                ));
+                                
+                                const initialDateFormatted = initialDate.toISOString().split('T')[0];
+                                
+                                const broadcastInterval = season.newEpisode.broadcastInterval || 7;
+                                
+                                const initialDateObj = new Date(initialDateFormatted);
+                                const currentDateObj = new Date(currentDateFormatted);
+                                
+                                const timeDiff = currentDateObj.getTime() - initialDateObj.getTime();
+                                const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                
+                                let releasedEpisodes = Math.floor(daysDiff / broadcastInterval) + 1;
+                                
+                                if (releasedEpisodes > season.episodes) {
+                                    releasedEpisodes = season.episodes;
+                                }
+                                
+                                if (releasedEpisodes < 0) {
+                                    releasedEpisodes = 0;
+                                }
+                                
+                                if (currentDateFormatted < initialDateFormatted) {
+                                    releasedEpisodes = 0;
+                                }
+                                
+                                let nextEpisode = releasedEpisodes + 1;
+                                
+                                if (nextEpisode > season.episodes) {
+                                    nextEpisode = null;
+                                }
+                                
+                                let nextReleaseISO = null;
+                                let nextReleaseHuman = null;
+                                
+                                if (nextEpisode !== null) {
+                                    const daysToAdd = (nextEpisode - 1) * broadcastInterval;
+                                    
+                                    const nextReleaseDate = new Date(initialDate);
+                                    nextReleaseDate.setUTCDate(initialDate.getUTCDate() + daysToAdd);
+                                    
+                                    nextReleaseISO = nextReleaseDate.toISOString().split('T')[0];
+                                    
+                                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                                    nextReleaseHuman = nextReleaseDate.toLocaleDateString('es-ES', options);
+                                }
+                                
+                                let lastEpisodeReleaseDate = null;
+                                if (releasedEpisodes > 0) {
+                                    const daysToAdd = (releasedEpisodes - 1) * broadcastInterval;
+                                    const lastReleaseDate = new Date(initialDate);
+                                    lastReleaseDate.setUTCDate(initialDate.getUTCDate() + daysToAdd);
+                                    lastEpisodeReleaseDate = lastReleaseDate.toISOString().split('T')[0];
+                                }
+                                
+                                const isReleasedToday = lastEpisodeReleaseDate === currentDateFormatted;
+                                
+                                let status;
+                                if (releasedEpisodes > 0) {
+                                    status = isReleasedToday ? 'Disponible' : 'Próximamente';
+                                } else {
+                                    status = 'Próximamente';
+                                }
+                                
+                                if (season.newEpisode.releasedEpisodes !== releasedEpisodes ||
+                                    season.newEpisode.nextEpisode !== nextEpisode ||
+                                    season.newEpisode.status !== status) {
+                                    dataChanged = true;
+                                }
+                                
+                                season.newEpisode.releasedEpisodes = releasedEpisodes;
+                                season.newEpisode.nextEpisode = nextEpisode;
+                                season.newEpisode.status = status;
+                                season.newEpisode.isReleasedToday = isReleasedToday;
+                                
+                                if (nextReleaseISO) {
+                                    season.newEpisode.displayDate = nextReleaseISO;
+                                    season.newEpisode.displayDateHuman = nextReleaseHuman;
+                                } else {
+                                    season.newEpisode.displayDate = originalDate;
+                                }
+                                
+                                console.log(`Anime: ${anime.title}, ${season.title}, Ep: ${releasedEpisodes}, Lanzado hoy: ${isReleasedToday}`);
+                            }
+                        }
+                    });
+                });
+            } catch (error) {
+                console.warn("Error al procesar los datos de anime:", error);
+            }
+            
+            updateSeasonBadges();
+            
+            if (dataChanged && window.location.pathname.includes('anime.html')) {
+                console.log('Se detectaron cambios en los datos, actualizando la vista...');
+                refreshCurrentAnimeView();
+            }
+        }
+
+        function updateSeasonBadges() {
+            const seasonTitles = document.querySelectorAll('.season-title');
+            
+            try {
+                const dataArray = getSourceData();
+                if (!Array.isArray(dataArray)) {
+                    return;
+                }
+                
+                const currentDate = new Date();
+                const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                
+                dataArray.forEach(anime => {
+                    anime.seasons.forEach(season => {
+                        if (season.newEpisode) {
+                            seasonTitles.forEach(titleElement => {
+                                const key = titleElement.dataset.seasonKey;
+                                if (!key) return;
+                                const [aid, seasonNumberStr] = key.split('_');
+                                if (parseInt(aid) !== anime.id) return;
+                                const seasonNumber = parseInt(seasonNumberStr);
+                                if (seasonNumber !== season.number) return;
+                                
+                                const badge = titleElement.querySelector('.new-episode-badge');
+                                if (badge) {
+                                    if (season.newEpisode.releasedEpisodes >= season.episodes && season.newEpisode.nextEpisode === null) {
+                                        badge.style.display = 'none';
+                                        return;
+                                    } else {
+                                        badge.style.display = 'inline-block';
+                                    }
+                                    
+                                    let lastEpisodeReleaseDate = null;
+                                    if (season.newEpisode.releasedEpisodes > 0) {
+                                        const initialDateParts = season.newEpisode.date.split('-');
+                                        if (initialDateParts.length === 3) {
+                                            const initialDate = new Date(Date.UTC(
+                                                parseInt(initialDateParts[0]),
+                                                parseInt(initialDateParts[1]) - 1,
+                                                parseInt(initialDateParts[2])
+                                            ));
+                                            
+                                            const broadcastInterval = season.newEpisode.broadcastInterval || 7;
+                                            
+                                            const daysToAdd = (season.newEpisode.releasedEpisodes - 1) * broadcastInterval;
+                                            
+                                            lastEpisodeReleaseDate = new Date(initialDate);
+                                            lastEpisodeReleaseDate.setUTCDate(initialDate.getUTCDate() + daysToAdd);
+                                            
+                                            lastEpisodeReleaseDate = lastEpisodeReleaseDate.toISOString().split('T')[0];
+                                        }
+                                    }
+                                    
+                                    const isReleasedToday = lastEpisodeReleaseDate === currentDateFormatted;
+                                    
+                                    const dateToShow = season.newEpisode.displayDateHuman || season.newEpisode.displayDate || season.newEpisode.date;
+                                    
+                                    if (isReleasedToday) {
+                                        badge.textContent = `¡Episodio ya disponible!`;
+                                        badge.classList.add('available');
+                                        badge.classList.remove('upcoming');
+                                    } else {
+                                        badge.textContent = `Próximamente - ${dateToShow}`;
+                                        badge.classList.add('upcoming');
+                                        badge.classList.remove('available');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            } catch (error) {
+                console.warn("Error al actualizar los badges de temporada:", error);
+            }
+        }
+
+        function refreshCurrentAnimeView() {
+            const currentUrlParams = new URLSearchParams(window.location.search);
+            const currentAnimeId = parseInt(currentUrlParams.get('id'));
+            
+            if (currentAnimeId) {
+                console.log('Refrescando vista del anime ID:', currentAnimeId);
+                displayAnimeDetails(currentAnimeId);
+            }
+        }
+        
+        function displayAnimeDetails(animeId) {
+            const anime = getSourceData().find(a => a.id === animeId);
+            if (!anime) {
+                animeDetailContainer.innerHTML = '<p>Anime no encontrado</p>';
+                return;
+            }
+            
+            document.title = `${anime.title} - Ureshii Anime`;
+            
+            animeDetailContainer.innerHTML = '';
+            
+            const existingBackground = document.querySelector('.background-image-container');
+            if (existingBackground) {
+                existingBackground.remove();
+            }
+            
+            const heroCarousel = document.createElement('div');
+            heroCarousel.className = 'hero-carousel';
+            heroCarousel.id = 'hero-carousel';
+            
+            const heroSlides = document.createElement('div');
+            heroSlides.className = 'hero-slides';
+            heroSlides.id = 'hero-slides';
+            
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide active';
+            
+            const bg = document.createElement('img');
+            bg.className = 'hero-slide-bg';
+            
+            const updateBannerImage = () => {
+                if (window.innerWidth <= 768) {
+                    bg.src = (anime.banner || '').replace('backdrop_wide', 'backdrop_tall');
+                } else {
+                    bg.src = anime.banner || anime.image;
+                }
+            };
+            
+            updateBannerImage();
+            
+            window.addEventListener('resize', updateBannerImage);
+            
+            bg.alt = anime.title;
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'hero-slide-overlay';
+            
+            const content = document.createElement('div');
+            content.className = 'hero-slide-content';
+            
+            const logo = document.createElement('img');
+            logo.className = 'hero-slide-logo';
+            logo.src = anime.logo || '';
+            logo.alt = anime.title;            
+            if (!anime.logo) {
+                const titleElement = document.createElement('h2');
+                titleElement.className = 'hero-slide-title';
+                titleElement.textContent = anime.title;
+                content.appendChild(titleElement);
+            } else {
+                content.appendChild(logo);
+            }
+            
+            const tags = document.createElement('div');
+            tags.className = 'hero-slide-tags';
+            
+            if (anime.contentRating) {
+                const ratingTag = document.createElement('span');
+                ratingTag.className = 'hero-slide-tag rating';
+                ratingTag.textContent = anime.contentRating;
+                tags.appendChild(ratingTag);
+                
+                const separator = document.createElement('span');
+                separator.textContent = ' • ';
+                separator.style.color = '#b4b4b4';
+                tags.appendChild(separator);
+            }
+            
+            if (anime.subtitled && anime.dubbed) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Sub | Dob';
+                tags.appendChild(langTag);
+            } else if (anime.subtitled) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Subtitulado';
+                tags.appendChild(langTag);
+            } else if (anime.dubbed) {
+                const langTag = document.createElement('span');
+                langTag.className = 'hero-slide-tag lang';
+                langTag.textContent = 'Doblado';
+                tags.appendChild(langTag);
+            }
+            
+            content.appendChild(tags);
+
+            function getContentWarningText(rating) {
+                switch(rating) {
+                    case 'ALL': return 'Contenido apto para todos los públicos.';
+                    case '+12': return 'Consumo de drogas/alcohol, Lenguaje ofensivo, Tabaquismo';
+                    case '12+': return 'Consumo de drogas/alcohol, Lenguaje ofensivo, Tabaquismo';
+                    case '+14': return 'Desnudez, Lenguaje ofensivo, Contenido sexual, Diálogos sugerentes, Suicidio, Violencia';
+                    case '14+': return 'Desnudez, Lenguaje ofensivo, Contenido sexual, Diálogos sugerentes, Suicidio, Violencia';
+                    case '+16': return 'Sangre/Gore, Lenguaje ofensivo, Violencia sexual, Imágenes sexualizadas, Violencia';
+                    case '16+': return 'Sangre/Gore, Lenguaje ofensivo, Violencia sexual, Imágenes sexualizadas, Violencia';
+                    case '+18': return 'Violencia explícita, Contenido sexual explícito, Lenguaje ofensivo.';
+                    case '18+': return 'Violencia explícita, Contenido sexual explícito, Lenguaje ofensivo.';
+                    default: return 'Este contenido puede no ser apropiado para todos los públicos.';
+                }
+            }
+            
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.className = 'hero-slide-buttons';
+            
+            let firstUnwatchedEpisode = null;
+            let firstUnwatchedSeason = null;
+            let firstUnwatchedEpisodeNumber = null;
+            let firstUnwatchedSeasonSlug = null;
+            
+            for (const season of anime.seasons) {
+                for (let i = 1; i <= season.episodes; i++) {
+                    const globalEpisode = getGlobalEpisodeNumber(anime, season.number, i);
+                    if (!isEpisodeWatched(anime.id, globalEpisode)) {
+                        firstUnwatchedEpisode = globalEpisode;
+                        firstUnwatchedSeason = season.number;
+                        firstUnwatchedEpisodeNumber = i;
+                        firstUnwatchedSeasonSlug = season.slug;
+                        break;
+                    }
+                }
+                if (firstUnwatchedEpisode !== null) break;
+            }
+            
+            const playButton = document.createElement('button');
+            playButton.className = 'hero-slide-button play-button';
+            
+            if (firstUnwatchedEpisode !== null) {
+                playButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E${firstUnwatchedEpisodeNumber}`;
+                playButton.onclick = () => openEpisode(anime, firstUnwatchedEpisode, firstUnwatchedSeason, firstUnwatchedEpisodeNumber, firstUnwatchedSeasonSlug);
+            } else {
+                let hasUpcomingEpisode = false;
+                let upcomingEpisodeInfo = null;
+                
+                for (const season of anime.seasons) {
+                    if (season.newEpisode && season.newEpisode.nextEpisode !== null) {
+                        const currentDate = new Date();
+                        const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                        const releaseISO = season.newEpisode.displayDate || season.newEpisode.date;
+                        const releaseDateParts = releaseISO.split('-');
+                        const releaseDate = new Date(
+                            parseInt(releaseDateParts[0]),
+                            parseInt(releaseDateParts[1]) - 1,
+                            parseInt(releaseDateParts[2])
+                        );
+                        const releaseDateFormatted = releaseDate.toISOString().split('T')[0];
+                        
+                        if (currentDateFormatted < releaseDateFormatted) {
+                            hasUpcomingEpisode = true;
+                            upcomingEpisodeInfo = {
+                                season: season,
+                                episodeNumber: season.newEpisode.nextEpisode,
+                                releaseDate: season.newEpisode.displayDateHuman || season.newEpisode.displayDate || season.newEpisode.date,
+                                status: season.newEpisode.status || 'Pendiente'
+                            };
+                            break;
+                        }
+                    }
+                }
+                
+                if (hasUpcomingEpisode) {
+                    playButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E${upcomingEpisodeInfo.episodeNumber}`;
+                    playButton.onclick = () => {
+                        const modal = document.createElement('div');
+                        modal.className = 'release-date-modal';
+                        
+                        const modalContent = document.createElement('div');
+                        modalContent.className = 'modal-content';
+                        
+                        const closeBtn = document.createElement('span');
+                        closeBtn.className = 'close-modal';
+                        closeBtn.innerHTML = '&times;';
+                        closeBtn.onclick = () => {
+                            modal.classList.remove('show');
+                            setTimeout(() => {
+                                document.body.removeChild(modal);
+                            }, 300);
+                        };
+                        
+                        const title = document.createElement('h2');
+                        title.textContent = 'Próximo episodio';
+                        
+                        const date = document.createElement('p');
+                        date.textContent = `Fecha de lanzamiento: ${upcomingEpisodeInfo.releaseDate}`;
+                        
+                        const info = document.createElement('p');
+                        info.textContent = `Estado: ${upcomingEpisodeInfo.status}`;
+                        
+                        const completedMessage = document.createElement('p');
+                        completedMessage.textContent = 'Has completado todos los episodios disponibles.';
+                        completedMessage.style.fontWeight = 'bold';
+                        completedMessage.style.color = 'var(--accent-color)';
+                        
+                        modalContent.appendChild(closeBtn);
+                        modalContent.appendChild(title);
+                        modalContent.appendChild(completedMessage);
+                        modalContent.appendChild(date);
+                        modalContent.appendChild(info);
+                        modal.appendChild(modalContent);
+                        
+                        document.body.appendChild(modal);
+                        
+                        setTimeout(() => {
+                            modal.classList.add('show');
+                        }, 10);
+                    };
+                } else {
+                    if (anime.seasons && anime.seasons.length > 0) {
+                        const firstSeason = anime.seasons[0];
+                        playButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E1';
+                        playButton.onclick = () => openEpisode(anime, 1, firstSeason.number, 1, firstSeason.slug);
+                    }
+                }
+            }
+            
+            const addButton = document.createElement('button');
+            addButton.className = `hero-slide-button add-button ${myList.includes(anime.id) ? 'in-list' : ''}`;
+            addButton.setAttribute('data-anime-id', anime.id);
+            
+            const addButtonSvg = myList.includes(anime.id) ? 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z"></path></svg>' : 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18.113l-3.256-2.326A2.989 2.989 0 0 0 12 15.228c-.629 0-1.232.194-1.744.559L7 18.113V4h10v14.113zM18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z"></path></svg>';
+            
+            const tooltipText = myList.includes(anime.id) ? 'Eliminar de la lista' : 'Agregar a Ureshiilist';
+            addButton.innerHTML = `<span class="tooltip">${tooltipText}</span>${addButtonSvg}`;
+            
+            addButton.onclick = (e) => {
+                e.stopPropagation();
+                if (typeof addToUreshiiList === 'function') {
+                    addToUreshiiList(anime.id);
+                } else {
+                    toggleMyList(anime.id);
+                }
+            };
+            
+            const favoriteButton = document.createElement('button');
+            favoriteButton.className = `hero-slide-button add-button favorite-button ${window.favorites.includes(anime.id) ? 'in-favorites' : ''}`;
+            favoriteButton.setAttribute('data-anime-id', anime.id);
+            
+            const favoriteButtonSvg = window.favorites.includes(anime.id) ? 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="favorite-filled-svg" aria-hidden="true" role="img"><path d="M12.078 5.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076C22.706 5.935 20.244 3 16.965 3c-1.927 0-3.556.815-4.887 2.446z"></path></svg>' : 
+                '<svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-t="favorite-svg" aria-hidden="true" role="img"><path d="M19.84 9.476C20.442 6.858 19.07 5 16.965 5c-1.31 0-2.377.534-3.337 1.71L12.046 8.65l-1.542-1.97C9.602 5.53 8.536 5 7.144 5 5.132 5 3.658 7.07 4.21 9.477c.601 2.623 3.21 5.702 7.901 9.099 4.512-3.103 7.054-6.163 7.73-9.1zM16.965 3c3.279 0 5.741 2.935 4.824 6.924-.866 3.77-4.103 7.463-9.71 11.076-5.761-3.962-9.034-7.654-9.819-11.076C1.426 6.285 3.818 3 7.144 3c1.322 0 2.485.352 3.49 1.055l-.105.127.282.002c.456.346.879.766 1.267 1.262a7.499 7.499 0 0 1 1.264-1.236l.31.003a9.964 9.964 0 0 0-.115-.146C14.549 3.356 15.692 3 16.965 3z"></path></svg>';
+            
+            const favoriteTooltipText = window.favorites.includes(anime.id) ? 'Quitar de favoritos' : 'Añadir a favoritos';
+            favoriteButton.innerHTML = `<span class="tooltip">${favoriteTooltipText}</span>${favoriteButtonSvg}`;
+            
+            favoriteButton.onclick = (e) => {
+                e.stopPropagation();
+                
+                const isCurrentlyFavorite = window.favorites.includes(anime.id);
+                
+                if (isCurrentlyFavorite) {
+                    const index = window.favorites.indexOf(anime.id);
+                    window.favorites.splice(index, 1);
+                    favoriteButton.classList.remove('in-favorites');
+                } else {
+                    window.favorites.push(anime.id);
+                    favoriteButton.classList.add('in-favorites');
+                }
+                
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(window.favorites));
+                
+                const tooltip = favoriteButton.querySelector('.tooltip');
+                const svg = favoriteButton.querySelector('svg');
+                const path = svg.querySelector('path');
+                
+                if (!isCurrentlyFavorite) {
+                    tooltip.textContent = 'Quitar de favoritos';
+                    svg.setAttribute('data-t', 'favorite-filled-svg');
+                    path.setAttribute('d', 'M12.078 5.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076C22.706 5.935 20.244 3 16.965 3c-1.927 0-3.556.815-4.887 2.446z');
+                } else {
+                    tooltip.textContent = 'Añadir a favoritos';
+                    svg.setAttribute('data-t', 'favorite-svg');
+                    path.setAttribute('d', 'M19.84 9.476C20.442 6.858 19.07 5 16.965 5c-1.31 0-2.377.534-3.337 1.71L12.046 8.65l-1.542-1.97C9.602 5.53 8.536 5 7.144 5 5.132 5 3.658 7.07 4.21 9.477c.601 2.623 3.21 5.702 7.901 9.099 4.512-3.103 7.054-6.163 7.73-9.1zM16.965 3c3.279 0 5.741 2.935 4.824 6.924-.866 3.77-4.103 7.463-9.71 11.076-5.761-3.962-9.034-7.654-9.819-11.076C1.426 6.285 3.818 3 7.144 3c1.322 0 2.485.352 3.49 1.055l-.105.127.282.002c.456.346.879.766 1.267 1.262a7.499 7.499 0 0 1 1.264-1.236l.31.003a9.964 9.964 0 0 0-.115-.146C14.549 3.356 15.692 3 16.965 3z');
+                }
+                
+                const event = new CustomEvent('animeFavoritesUpdated', {
+                    detail: { animeId: anime.id, inFavorites: !isCurrentlyFavorite }
+                });
+                document.dispatchEvent(event);
+            };
+
+            const unwatchButton = document.createElement('button');
+            unwatchButton.className = 'hero-slide-button add-button unwatch-button';
+            unwatchButton.innerHTML = `
+                <span class="tooltip">Otros</span>
+                <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" data-t="more-svg" aria-hidden="true" role="img">
+                    <path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-2 4c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2zm2 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item" data-action="unmark-mode">Modo desmarcar</div>
+                </div>
+            `;
+            
+            const toggleAllWatchedButton = document.createElement('button');
+            toggleAllWatchedButton.className = 'toggle-all-watched-button';
+            toggleAllWatchedButton.textContent = 'Editar';
+            toggleAllWatchedButton.dataset.showingAll = 'true';
+            toggleAllWatchedButton.style.display = 'none'; 
+            
+            const dropdownMenu = unwatchButton.querySelector('.dropdown-menu');
+            
+            unwatchButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                    if (menu !== dropdownMenu) {
+                        menu.classList.remove('show');
+                    }
+                });
+                
+                dropdownMenu.classList.toggle('show');
+            });
+            
+            const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const action = item.dataset.action;
+                    
+                    if (action === 'unmark-mode') {
+                            executeUnmarkMode();
+                    }
+                    
+                    dropdownMenu.classList.remove('show');
+                });
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!unwatchButton.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+            
+            function executeUnmarkMode() {
+                const allEpisodes = document.querySelectorAll('.season-episodes[style*="display: flex"] .episode');
+                
+                const showingAll = toggleAllWatchedButton.dataset.showingAll === 'true';
+                
+                toggleAllWatchedButton.dataset.showingAll = showingAll ? 'false' : 'true';
+                
+                if (showingAll) {
+                    toggleAllWatchedButton.classList.add('showing-watched-only');
+                    
+                    let editModeFrame = document.querySelector('.edit-mode-frame');
+                    if (!editModeFrame) {
+                        editModeFrame = document.createElement('div');
+                        editModeFrame.className = 'edit-mode-frame';
+                        editModeFrame.textContent = 'Ahora solo se están mostrando los episodios que has visto. Dale click a un episodio para marcar como no visto. Para salir de este modo pulsa otra vez el botón de editar.';
+                        
+                        const animeDetailContainer = document.getElementById('anime-detail-container');
+                        const seasonsContainer = document.querySelector('.seasons-container');
+                        if (animeDetailContainer && seasonsContainer) {
+                            animeDetailContainer.insertBefore(editModeFrame, seasonsContainer);
+                        }
+                    }
+                    editModeFrame.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        editModeFrame.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }, 100);
+                } else {
+                    toggleAllWatchedButton.classList.remove('showing-watched-only');
+                    
+                    const editModeFrame = document.querySelector('.edit-mode-frame');
+                    if (editModeFrame) {
+                        editModeFrame.style.display = 'none';
+                    }
+                }
+                
+                allEpisodes.forEach(ep => {
+                    if (showingAll) {
+                        if (ep.classList.contains('watched')) {
+                            ep.style.display = 'flex';
+                            ep.classList.add('unwatch-mode');
+                        } else {
+                            ep.style.display = 'none';
+                        }
+                    } else {
+                        ep.style.display = 'flex';
+                        ep.classList.remove('unwatch-mode');
+                    }
+                });
+            }
+            
+
+            
+            const firstRowContainer = document.createElement('div');
+            firstRowContainer.className = 'hero-slide-buttons-row first-row';
+            
+            const secondRowContainer = document.createElement('div');
+            secondRowContainer.className = 'hero-slide-buttons-row second-row';
+            
+            firstRowContainer.appendChild(playButton);
+            firstRowContainer.appendChild(addButton);
+            
+            const favoriteContainer = document.createElement('div');
+            favoriteContainer.className = 'button-with-title';
+            favoriteContainer.appendChild(favoriteButton);
+            const favoriteTitle = document.createElement('div');
+            favoriteTitle.className = 'button-title';
+            favoriteTitle.textContent = 'FAVORITOS';
+            favoriteContainer.appendChild(favoriteTitle);
+            
+            const unwatchContainer = document.createElement('div');
+            unwatchContainer.className = 'button-with-title';
+            unwatchContainer.appendChild(unwatchButton);
+            const unwatchTitle = document.createElement('div');
+            unwatchTitle.className = 'button-title';
+            unwatchTitle.textContent = 'OTROS';
+            unwatchContainer.appendChild(unwatchTitle);
+            
+            secondRowContainer.appendChild(favoriteContainer);
+            secondRowContainer.appendChild(unwatchContainer);
+            
+            buttonsContainer.appendChild(firstRowContainer);
+            buttonsContainer.appendChild(secondRowContainer);
+            
+            content.appendChild(buttonsContainer);
+            
+            const descriptionContainer = document.createElement('div');
+            descriptionContainer.className = 'description-container';
+            descriptionContainer.style.position = 'relative';
+            descriptionContainer.style.top = '0';
+
+            const description = document.createElement('p');
+            description.className = 'hero-slide-description';
+            description.textContent = anime.description || 'Sin descripción disponible';
+
+            descriptionContainer.appendChild(description);
+            
+            const moreContentButton = document.createElement('button');
+            moreContentButton.className = 'more-content-button';
+            moreContentButton.textContent = 'Más contenido';
+            
+            const descriptionWrapper = document.createElement('div');
+            descriptionWrapper.className = 'description-wrapper';
+            
+            const twoColumnContainer = document.createElement('div');
+            twoColumnContainer.className = 'two-column-container';
+            
+            const leftColumn = document.createElement('div');
+            leftColumn.className = 'left-column';
+            
+            const rightColumn = document.createElement('div');
+            rightColumn.className = 'right-column';
+            
+            const audioInfo = document.createElement('div');
+            audioInfo.className = 'audio-info';
+            const audioLanguages = ['Japanese'];
+            if (anime.dubbed) {
+                audioLanguages.push('Español');
+            }
+            audioInfo.innerHTML = `<strong>Audio:</strong> ${audioLanguages.join(', ')}`;
+            
+            const subtitlesInfo = document.createElement('div');
+            subtitlesInfo.className = 'subtitles-info';
+            if (anime.subtitled) {
+                subtitlesInfo.innerHTML = `<strong>Subtítulos:</strong> Español`;
+            } else {
+                subtitlesInfo.innerHTML = `<strong>Subtítulos:</strong> No disponibles`;
+            }
+            
+            const rightContentWarning = document.createElement('div');
+            rightContentWarning.className = 'content-warning-right';
+            const rightAgeRating = anime.contentRating || '+14';
+            rightContentWarning.innerHTML = `<strong>Aviso sobre el contenido:</strong> ${rightAgeRating} ${getContentWarningText(rightAgeRating)}`;
+            
+            rightColumn.appendChild(audioInfo);
+            rightColumn.appendChild(subtitlesInfo);
+            rightColumn.appendChild(rightContentWarning);
+            
+            leftColumn.appendChild(descriptionContainer);
+            
+            twoColumnContainer.appendChild(leftColumn);
+            twoColumnContainer.appendChild(rightColumn);
+            
+            descriptionWrapper.appendChild(twoColumnContainer);
+            
+            function checkTextOverflow() {
+                setTimeout(() => {
+                    const lineHeight = parseFloat(window.getComputedStyle(description).lineHeight);
+                    const maxHeight = lineHeight * 3;
+                    
+                    const originalMaxHeight = description.style.maxHeight;
+                    description.style.maxHeight = 'none';
+                    const fullHeight = description.scrollHeight;
+                    description.style.maxHeight = originalMaxHeight;
+                    
+                    if (!description.classList.contains('expanded')) {
+                        description.style.maxHeight = maxHeight + 'px';
+                        description.style.overflow = 'hidden';
+                    }
+                    
+                    descriptionWrapper.appendChild(moreContentButton);
+                    moreContentButton.style.display = 'block';
+                }, 100);
+            }
+            
+            checkTextOverflow();
+            window.addEventListener('resize', checkTextOverflow);
+            
+            moreContentButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                
+                const isExpanding = !descriptionContainer.classList.contains('expanded');
+                
+                moreContentButton.textContent = isExpanding ? 'Menos contenido' : 'Más contenido';
+                
+                if (isExpanding) {
+                    description.style.maxHeight = 'none';
+                    description.style.overflow = 'visible';
+                    
+                    rightColumn.classList.add('expanded');
+                    
+                    descriptionContainer.classList.add('expanded');
+                    description.classList.add('expanded');
+                } else {
+                    const lineHeight = parseFloat(window.getComputedStyle(description).lineHeight);
+                    const maxHeight = lineHeight * 3;
+                    description.style.maxHeight = maxHeight + 'px';
+                    description.style.overflow = 'hidden';
+                    
+                    rightColumn.classList.remove('expanded');
+                    
+                    descriptionContainer.classList.remove('expanded');
+                    description.classList.remove('expanded');
+                }
+                
+            });
+            
+            const fixedButtonsContainer = document.createElement('div');
+            fixedButtonsContainer.className = 'fixed-buttons-container';
+
+            const fixedPlayButton = playButton.cloneNode(true);
+            fixedPlayButton.addEventListener('click', playButton.onclick);
+
+            const fixedAddButton = addButton.cloneNode(true);
+            fixedAddButton.setAttribute('data-anime-id', anime.id);
+            fixedAddButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (typeof addToUreshiiList === 'function') {
+                    addToUreshiiList(anime.id);
+                } else {
+                    toggleMyList(anime.id);
+                }
+            });
+
+            fixedButtonsContainer.appendChild(fixedPlayButton);
+            fixedButtonsContainer.appendChild(fixedAddButton);
+
+            document.body.appendChild(fixedButtonsContainer);
+
+            window.addEventListener('scroll', () => {
+                const buttonsRect = buttonsContainer.getBoundingClientRect();
+                const isButtonsVisible = buttonsRect.top >= 0 && buttonsRect.bottom <= window.innerHeight;
+                
+                fixedButtonsContainer.classList.toggle('visible', !isButtonsVisible);
+            });
+            
+            slide.appendChild(bg);
+            slide.appendChild(overlay);
+            slide.appendChild(content);
+            
+            heroSlides.appendChild(slide);
+            heroCarousel.appendChild(heroSlides);
+            
+            animeDetailContainer.insertBefore(heroCarousel, animeDetailContainer.firstChild);
+            
+            animeDetailContainer.appendChild(descriptionWrapper);
+            
+            animeDetailContainer.appendChild(toggleAllWatchedButton);
+            
+            const seasonsContainer = document.createElement('div');
+            seasonsContainer.className = 'seasons-container';
+            
+            const sortedSeasons = [...anime.seasons].sort((a, b) => a.number - b.number);
+            
+            sortedSeasons.forEach(season => {
+                const seasonContainer = document.createElement('div');
+                seasonContainer.className = 'season-container collapsible-box';
+                
+                const seasonTitle = document.createElement('div');
+                seasonTitle.className = 'season-title collapsible-header';
+                
+                const seasonToggle = document.createElement('span');
+                seasonToggle.className = 'season-toggle';
+                seasonToggle.textContent = '▼';
+                
+                seasonTitle.appendChild(seasonToggle);
+                seasonTitle.appendChild(document.createTextNode(`${season.title} (${season.episodes} episodios)`));
+                
+                seasonTitle.dataset.seasonKey = `${anime.id}_${season.number}`;
+                
+                const seasonContent = document.createElement('div');
+                seasonContent.className = 'season-content collapsible-content';
+                
+                const seasonEpisodes = document.createElement('div');
+                seasonEpisodes.className = 'season-episodes';
+                const wasCollapsed = isSeasonCollapsed(anime.id, season.number);
+                seasonEpisodes.style.display = wasCollapsed ? 'none' : 'flex';
+                seasonToggle.textContent = wasCollapsed ? '►' : '▼';
+                
+                for (let i = 1; i <= season.episodes; i++) {
+                    const episode = document.createElement('div');
+                    episode.className = 'episode';
+                    const episodeGlobalNumber = getGlobalEpisodeNumber(anime, season.number, i);
+                    episode.dataset.globalEpisode = episodeGlobalNumber;
+                    
+                    if (isEpisodeWatched(anime.id, episodeGlobalNumber)) {
+                        episode.classList.add('watched');
+                    }
+                    episode.textContent = i;
+                    
+                    let isFutureEpisode = false;
+                    let isNextRelease = false;
+                    
+                    if (season.newEpisode) {
+                        const releaseDate = new Date(season.newEpisode.date);
+                        const currentDate = new Date();
+                        const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                        const releaseDateFormatted = releaseDate.toISOString().split('T')[0];
+                        
+                        if (season.newEpisode.releasedEpisodes !== undefined) {
+                            if (i <= season.newEpisode.releasedEpisodes) {
+                                const currentDate = new Date();
+                                const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                                
+                                const initialDateParts = season.newEpisode.date.split('-');
+                                if (initialDateParts.length === 3) {
+                                    const initialDate = new Date(Date.UTC(
+                                        parseInt(initialDateParts[0]),
+                                        parseInt(initialDateParts[1]) - 1,
+                                        parseInt(initialDateParts[2])
+                                    ));
+                                    
+                                    const broadcastInterval = season.newEpisode.broadcastInterval || 7;
+                                    
+                                    const daysToAdd = (i - 1) * broadcastInterval;
+                                    
+                                    const episodeReleaseDate = new Date(initialDate);
+                                    episodeReleaseDate.setUTCDate(initialDate.getUTCDate() + daysToAdd);
+                                    
+                                    const episodeReleaseDateFormatted = episodeReleaseDate.toISOString().split('T')[0];
+                                    
+                                    if (episodeReleaseDateFormatted === currentDateFormatted) {
+                                        episode.classList.add('new-available');
+                                    } else {
+                                        episode.classList.add('available');
+                                    }
+                                } else {
+                                    episode.classList.add('available');
+                                }
+                            }
+                            else if (season.newEpisode.nextEpisode !== null && i === season.newEpisode.nextEpisode) {
+                                const currentDate = new Date();
+                                const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                                
+                                episode.classList.add('next-release');
+                                episode.title = `Próximo episodio: ${season.newEpisode.displayDateHuman || season.newEpisode.displayDate || season.newEpisode.date}`;
+                            }
+                            else if (season.newEpisode.nextEpisode === null || i > season.newEpisode.nextEpisode) {
+                                isFutureEpisode = true;
+                                episode.classList.add('locked');
+                                episode.title = 'Episodio no disponible aún';
+                            }
+                        }
+                    } else {
+                        episode.classList.add('available');
+                    }
+                    
+                    episode.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        console.log('Clic en episodio:', {
+                            episodeNumber: i,
+                            episodeClasses: episode.className,
+                            hasNextReleaseClass: episode.classList.contains('next-release')
+                        });
+                        
+                        if (episode.classList.contains('next-release')) {
+                            const currentDate = new Date();
+                            const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                            
+                            const releaseISO = season.newEpisode.displayDate || season.newEpisode.date;
+                            const releaseDateParts = releaseISO.split('-');
+                            const releaseDate = new Date(
+                                parseInt(releaseDateParts[0]),
+                                parseInt(releaseDateParts[1]) - 1,
+                                parseInt(releaseDateParts[2])
+                            );
+                            const releaseDateFormatted = releaseDate.toISOString().split('T')[0];
+                            
+                            console.log('Mostrando modal para próximo episodio:', {
+                                currentDateFormatted,
+                                releaseDateFormatted,
+                                episodeNumber: i
+                            });
+                            
+                            if (currentDateFormatted < releaseDateFormatted) {
+                                const modal = document.createElement('div');
+                                modal.className = 'release-date-modal';
+                                
+                                const modalContent = document.createElement('div');
+                                modalContent.className = 'modal-content';
+                                
+                                const closeBtn = document.createElement('span');
+                                closeBtn.className = 'close-modal';
+                                closeBtn.innerHTML = '&times;';
+                                closeBtn.onclick = () => {
+                                    modal.classList.remove('show');
+                                    setTimeout(() => {
+                                        document.body.removeChild(modal);
+                                    }, 300);
+                                };
+                                
+                                const title = document.createElement('h2');
+                                title.textContent = 'Próximo episodio';
+                                
+                                const date = document.createElement('p');
+                                date.textContent = `Fecha de lanzamiento: ${season.newEpisode.displayDateHuman || season.newEpisode.displayDate || season.newEpisode.date}`;
+                                
+                                const info = document.createElement('p');
+                                info.textContent = `Estado: ${season.newEpisode.status || 'Pendiente'}`;
+                                modalContent.appendChild(closeBtn);
+                                modalContent.appendChild(title);
+                                modalContent.appendChild(date);
+                                modalContent.appendChild(info);
+                                modal.appendChild(modalContent);
+                                
+                                document.body.appendChild(modal);
+                                
+                                setTimeout(() => {
+                                    modal.classList.add('show');
+                                }, 10);
+                                return; 
+                            }
+                        }
+                        
+                        const showingWatchedOnly = toggleAllWatchedButton.dataset.showingAll === 'false';
+                        
+                        if (showingWatchedOnly && episode.classList.contains('unwatch-mode')) {
+                            unwatchEpisode(anime.id, episodeGlobalNumber);
+                            episode.classList.remove('watched');
+                            episode.style.display = 'none';
+                            
+                            const watchedEpisodes = seasonEpisodes.querySelectorAll('.episode.watched');
+                            if (watchedEpisodes.length === 0) {
+                                toggleAllWatchedButton.click(); 
+                            }
+                        } else if (!episode.classList.contains('future') && !episode.classList.contains('locked') && 
+                                  (episode.classList.contains('available') || episode.classList.contains('new-available'))) {
+                            openEpisode(anime, episodeGlobalNumber, season.number, i, season.slug || '');
+                        } else if (episode.classList.contains('next-release')) {
+                            const currentDate = new Date();
+                            const currentDateFormatted = currentDate.toISOString().split('T')[0];
+                            
+                            const releaseISO = season.newEpisode.displayDate || season.newEpisode.date;
+                            const releaseDateParts = releaseISO.split('-');
+                            const releaseDate = new Date(
+                                parseInt(releaseDateParts[0]),
+                                parseInt(releaseDateParts[1]) - 1,
+                                parseInt(releaseDateParts[2])
+                            );
+                            
+                            const modal = document.createElement('div');
+                            modal.className = 'release-date-modal';
+                            
+                            const modalContent = document.createElement('div');
+                            modalContent.className = 'modal-content';
+                            
+                            const closeBtn = document.createElement('span');
+                            closeBtn.className = 'close-modal';
+                            closeBtn.innerHTML = '&times;';
+                            closeBtn.onclick = () => {
+                                modal.classList.remove('show');
+                                setTimeout(() => {
+                                    document.body.removeChild(modal);
+                                }, 300);
+                            };
+                            
+                            const title = document.createElement('h2');
+                            title.textContent = 'Próximo episodio';
+                            
+                            const date = document.createElement('p');
+                            date.textContent = `Fecha de lanzamiento: ${season.newEpisode.displayDateHuman || season.newEpisode.displayDate || season.newEpisode.date}`;
+                            
+                            const info = document.createElement('p');
+                            info.textContent = `Estado: ${season.newEpisode.status || 'Pendiente'}`;
+                            modalContent.appendChild(closeBtn);
+                            modalContent.appendChild(title);
+                            modalContent.appendChild(date);
+                            modalContent.appendChild(info);
+                            modal.appendChild(modalContent);
+                            
+                            document.body.appendChild(modal);
+                            
+                            setTimeout(() => {
+                                modal.classList.add('show');
+                            }, 10);
+                        }
+                    });
+                    
+                    seasonEpisodes.appendChild(episode);
+                }
+                
+                seasonTitle.addEventListener('click', () => {
+                    const isVisible = seasonEpisodes.style.display !== 'none';
+                    seasonEpisodes.style.display = isVisible ? 'none' : 'flex';
+                    seasonToggle.textContent = isVisible ? '►' : '▼';
+                    setSeasonCollapsed(anime.id, season.number, isVisible);
+                });
+                
+                seasonContainer.appendChild(seasonTitle);
+                seasonContainer.appendChild(seasonEpisodes);
+                seasonsContainer.appendChild(seasonContainer);
+            });
+            
+            animeDetailContainer.appendChild(seasonsContainer);
+        }
+        
+        function addMoreContentSection() {
+            const moreContentSection = document.createElement('div');
+            moreContentSection.className = 'more-content-section';
+            moreContentSection.style.marginTop = '40px';
+            moreContentSection.style.marginBottom = '80px';
+            moreContentSection.style.marginLeft = '20px';
+            moreContentSection.style.marginRight = '20px';
+            
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.textContent = 'Más contenido';
+            sectionTitle.style.marginBottom = '20px';
+            sectionTitle.style.borderBottom = '2px solid var(--accent-color)';
+            sectionTitle.style.paddingBottom = '10px';
+            
+            const animeContainer = document.createElement('div');
+            animeContainer.className = 'anime-grid';
+            
+            const currentAnimeId = animeId;
+            
+            const availableAnimes = getSourceData();
+            
+            const filteredAnimes = availableAnimes.filter(anime => anime.id !== currentAnimeId);
+            
+            let maxAnimes = 6; 
+            const screenWidth = window.innerWidth;
+            
+            if (screenWidth <= 768) {
+                maxAnimes = 2; 
+            } else if (screenWidth <= 1024) {
+                maxAnimes = 4; 
+            } else if (screenWidth <= 1399) {
+                maxAnimes = 5;
+            }
+            
+            const selectedAnimes = [];
+            if (filteredAnimes.length > 0) {
+                if (filteredAnimes.length > maxAnimes) {
+                    const shuffled = [...filteredAnimes].sort(() => 0.5 - Math.random());
+                    selectedAnimes.push(...shuffled.slice(0, maxAnimes));
+                } else {
+                    selectedAnimes.push(...filteredAnimes);
+                }
+            }
+            
+            if (selectedAnimes.length === 0) {
+                return;
+            }
+            
+            selectedAnimes.forEach(anime => {
+                const animeCard = window.createAnimeCard(anime);
+                animeContainer.appendChild(animeCard);
+            });
+            
+            moreContentSection.appendChild(sectionTitle);
+            moreContentSection.appendChild(animeContainer);
+            
+            document.querySelector('#anime-detail-container').appendChild(moreContentSection);
+        }
+        
+        document.addEventListener('animeFavoritesUpdated', (event) => {
+            const { animeId: updatedAnimeId, inFavorites } = event.detail;
+            
+            const heroSlider = document.querySelector('.hero-slider');
+            if (heroSlider) {
+                const heroFavoriteButtons = heroSlider.querySelectorAll(`.hero-slide-button.favorite-button[data-anime-id="${updatedAnimeId}"]`);
+                heroFavoriteButtons.forEach(button => {
+                    if (inFavorites) {
+                        button.classList.add('in-favorites');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Quitar de favoritos';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M12.078 5.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076C22.706 5.935 20.244 3 16.965 3c-1.927 0-3.556.815-4.887 2.446z');
+                    } else {
+                        button.classList.remove('in-favorites');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Añadir a favoritos';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M19.84 9.476C20.442 6.858 19.07 4.734 16.965 3c-1.927 0-3.556.815-4.887 2.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076z');
+                    }
+                });
+            }
+            
+            const fixedContainer = document.querySelector('.fixed-buttons-container');
+            if (fixedContainer) {
+                const fixedFavoriteButtons = fixedContainer.querySelectorAll(`.hero-slide-button.favorite-button[data-anime-id="${updatedAnimeId}"]`);
+                fixedFavoriteButtons.forEach(button => {
+                    if (inFavorites) {
+                        button.classList.add('in-favorites');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Quitar de favoritos';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M12.078 5.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076C22.706 5.935 20.244 3 16.965 3c-1.927 0-3.556.815-4.887 2.446z');
+                    } else {
+                        button.classList.remove('in-favorites');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Añadir a favoritos';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M19.84 9.476C20.442 6.858 19.07 4.734 16.965 3c-1.927 0-3.556.815-4.887 2.446C10.801 3.816 9.156 3 7.144 3 3.818 3 1.426 6.285 2.26 9.924c.785 3.422 4.058 7.114 9.818 11.076 5.608-3.613 8.845-7.305 9.711-11.076z');
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('animeListUpdated', (event) => {
+            const { animeId: updatedAnimeId, inList } = event.detail;
+            
+            const heroSlider = document.querySelector('.hero-slider');
+            if (heroSlider) {
+                const heroButtons = heroSlider.querySelectorAll(`.hero-slide-button.add-button[data-anime-id="${updatedAnimeId}"]`);
+                heroButtons.forEach(button => {
+                    if (inList) {
+                        button.classList.add('in-list');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Eliminar de la lista';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z');
+                    } else {
+                        button.classList.remove('in-list');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Agregar a Ureshiilist';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M17 18.113l-3.256-2.326A2.989 2.989 0 0 0 12 15.228c-.629 0-1.232.194-1.744.559L7 18.113V4h10v14.113zM18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z');
+                    }
+                });
+            }
+            
+            const fixedContainer = document.querySelector('.fixed-buttons-container');
+            if (fixedContainer) {
+                const fixedButtons = fixedContainer.querySelectorAll(`.hero-slide-button.add-button[data-anime-id="${updatedAnimeId}"]`);
+                fixedButtons.forEach(button => {
+                    if (inList) {
+                        button.classList.add('in-list');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Eliminar de la lista';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z');
+                    } else {
+                        button.classList.remove('in-list');
+                        const tooltip = button.querySelector('.tooltip');
+                        if (tooltip) tooltip.textContent = 'Agregar a Ureshiilist';
+                        const path = button.querySelector('svg path');
+                        if (path) path.setAttribute('d', 'M17 18.113l-3.256-2.326A2.989 2.989 0 0 0 12 15.228c-.629 0-1.232.194-1.744.559L7 18.113V4h10v14.113zM18 2H6a1 1 0 0 0-1 1v17.056c0 .209.065.412.187.581a.994.994 0 0 0 1.394.233l4.838-3.455a1 1 0 0 1 1.162 0l4.838 3.455A1 1 0 0 0 19 20.056V3a1 1 0 0 0-1-1z');
+                    }
+                });
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAndUnlockEpisodes();
+            
+            if (typeof window.loadInitialDataFromDrive === 'function') {
+                window.loadInitialDataFromDrive();
+            }
+            
+            window.addEventListener('driveDataReady', function(event) {
+                console.log('Datos de Google Drive cargados en anime.html:', event.detail);
+                if (animeId) {
+                    displayAnimeDetails(animeId);
+                }
+            });
+            
+            setTimeout(() => {
+                if (animeId) {
+                    displayAnimeDetails(animeId);
+                    setTimeout(addMoreContentSection, 100);
+                }
+            }, 10);
+        });
+    </script>
+</body>
+</html>

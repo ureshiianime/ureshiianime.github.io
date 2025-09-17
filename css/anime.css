@@ -1,0 +1,1427 @@
+.back-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: #ff5722;
+            transform: translateY(-2px);
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .anime-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .anime-detail-header {
+            position: relative;
+            margin-bottom: 30px;
+            background-color: var(--card-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            height: 350px;
+        }
+        
+        .anime-detail-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.7);
+        }
+        
+        .anime-detail-info {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            margin: 20px;
+            backdrop-filter: blur(5px);
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .add-to-list {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            height: 45px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .add-to-list:hover {
+            transform: translateY(0px) !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .add-to-list:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.1s;
+        }
+        
+        .add-to-list:before {
+            content: "Añadir a mi lista";
+            white-space: nowrap;
+            font-size: 14px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .add-to-list.in-list {
+            background-color: #4CAF50;
+        }
+        
+        .add-to-list.in-list:before {
+            content: "Quitar de mi lista";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .add-to-list.in-list {
+            background-color: #4CAF50;
+        }
+        
+        .add-to-list.in-list:hover {
+            background-color: #66BB6A;
+        }
+        
+        .new-episode-badge {
+            margin-left: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            display: inline-block;
+        }
+        
+        .new-episode-badge.available {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .new-episode-badge.upcoming {
+            background-color: #f1c40f;
+            color: black;
+        }
+        
+        .episode.locked {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+        
+        .episode.next-release {
+            background-color: #f1c40f;
+            color: #000;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .episode.new-available {
+            background-color: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        
+        .release-date-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .release-date-modal.show {
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 80%;
+            position: relative;
+            color: white;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+.background-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.background-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    z-index: 0;
+}
+
+body {
+    background-color: #121212;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+    .anime-detail-header {
+        position: relative;
+        margin-bottom: 30px;
+        border-radius: 0;
+        overflow: visible;
+        box-shadow: none;
+        background-color: transparent;
+        height: auto;
+    }
+    
+    .anime-detail-image {
+        display: none;
+    }
+    
+    .anime-detail-info {
+        position: relative;
+        z-index: 2;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        margin: 20px 0;
+        backdrop-filter: blur(5px);
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .toggle-all-watched-button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 45px;
+        min-width: 120px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .toggle-all-watched-button:hover {
+        transform: translateY(0px) !important;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .toggle-all-watched-button:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all 0.1s;
+    }
+    
+    .toggle-all-watched-button.showing-watched-only {
+        background-color: #ff2f00;
+    }
+    
+    .add-to-list.in-list {
+        background-color: #4CAF50;
+    }
+    
+    .add-to-list.in-list:before {
+        content: "Quitar de mi lista";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .add-to-list.in-list {
+        background-color: #4CAF50;
+        margin: 15px 0;
+    }
+    
+    .add-to-list.in-list:hover {
+        background-color: #66BB6A;
+    }
+    
+    .release-date-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .release-date-modal.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .release-date-modal .modal-content {
+        background-color: var(--card-color);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .release-date-modal .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-color);
+    }
+    
+    .edit-mode-frame {
+        background-color: rgba(229, 56, 53, 0.144);
+        border: 1px solid rgba(229, 57, 53, 0.7);
+        border-radius: 8px;
+        margin: 15px 0;
+        margin-left: 15px;
+        margin-right: 15px;
+        padding: 15px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        display: none;
+        font-weight: normal;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .season-container.edit-mode {
+        position: relative;
+    }
+    
+    .edit-mode .season-episodes {
+        background-color: transparent;
+    }
+    
+    .add-to-list.in-list {
+        background-color: #4CAF50;
+    }
+    
+    .add-to-list.in-list:before {
+        content: "Quitar de mi lista";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%; 
+    }
+    
+    .add-to-list.in-list {
+        background-color: #4CAF50;
+        margin: 15px 0;
+    }
+    
+    .add-to-list.in-list:hover {
+        background-color: #66BB6A;
+    }
+    
+    .release-date-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .release-date-modal.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .release-date-modal .modal-content {
+        background-color: var(--card-color);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .release-date-modal .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-color);
+    }
+
+.collapsible-box {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(30, 30, 30, 0.7);
+    transition: all 0.3s ease;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.collapsible-box:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.collapsible-header {
+    padding: 15px;
+    cursor: pointer;
+    background-color: rgba(40, 40, 40, 0.9);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.collapsible-header:hover {
+    background-color: rgba(60, 60, 60, 0.9);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 15px;
+}
+
+.collapsible-content.active {
+    max-height: 1000px;
+    padding: 15px;
+}
+
+.season-episodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    margin: 15px;
+}
+
+.hero-carousel {
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+    margin-top: -50px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 5%;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+.hero-slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to top, var(--background-color) 10%, transparent 100%);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, var(--background-color), transparent);
+    z-index: 0;
+}
+
+.hero-slide-content {
+    position: relative;
+    z-index: 2;
+    max-width: 400px;
+    margin-bottom: 5%;
+}
+
+.background-image-container {
+    display: none;
+}
+
+.anime-container {
+    padding-top: 0;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#anime-detail-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+.anime-episodes-container {
+    margin-top: 0;
+    padding-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.hero-slide-button.unwatch-button {
+    background-color: transparent;
+    border: none;
+    color: var(--accent-color);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+}
+
+.hero-slide-button.unwatch-button .action-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--accent-color);
+}
+
+.modal-button.confirm-button svg,
+.settings-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .hero-slide-buttons {
+        display: block !important;
+        width: 100%;
+    }
+    .hero-slide-buttons-row {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hero-slide-buttons-row.first-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: -15px;
+    }
+
+    .hero-slide-buttons-row.first-row .hero-slide-button.play-button {
+        flex: 2;
+    }
+
+    .hero-slide-buttons-row.first-row .hero-slide-button.add-button {
+        flex: 0 0 auto;
+        width: 50px;
+        aspect-ratio: 1/1;
+    }
+
+    .hero-slide-buttons-row.first-row .hero-slide-button {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-slide-buttons-row.second-row {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        clear: both;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .button-with-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        padding: 4px 0;
+    }
+
+    .hero-slide-buttons-row.second-row .hero-slide-button {
+        padding: 4px !important;
+        margin: 0 !important;
+    }
+
+    .button-title {
+        color: var(--accent-color);
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+}
+
+@media (min-width: 769px) {
+    .hero-slide-buttons-row {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .hero-slide-buttons-row.first-row,
+    .hero-slide-buttons-row.second-row {
+        display: contents;
+    }
+
+    .button-with-title {
+        display: contents;
+    }
+
+    .button-title {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .tooltip {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    .hero-slide-description {
+        font-size: 1.1em !important;
+    }
+    
+    .more-content-button {
+        font-size: 1.1em !important;
+    }
+    
+    .audio-info {
+        font-size: 1.1em !important;
+    }
+    
+    .subtitles-info {
+        font-size: 1.1em !important;
+    }
+    
+    .content-warning-right {
+        font-size: 1.1em !important;
+    }
+
+    .season-title {
+        font-size: 1.4em !important;
+    }
+
+    .season-toggle {
+        font-size: 0.9em !important;
+    }
+
+    .episode {
+        font-size: 1em !important;
+    }
+    
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .action-icon {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .hero-slide-buttons-row.second-row .button-with-title .action-icon,
+    .hero-slide-buttons-row.second-row .hero-slide-button .action-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .button-with-title svg,
+    .hero-slide-buttons-row.second-row svg {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
+
+.hero-slide-button.unwatch-button:hover {
+    background-color: transparent;
+}
+
+.hero-slide-button.unwatch-button:hover .action-icon {
+    fill: #ff8c6e;
+}
+
+.hero-carousel {
+    margin-top: 0;
+    height: 70vh;
+}
+
+.hero-slide-content {
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+    margin-top: 20px;
+    margin-bottom: 5%;
+    padding: 0 20px;
+}
+
+.hero-slide-description {
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    align-self: flex-start;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    display: block;
+    height: 4.2em;
+    max-height: 4.2em;
+    overflow: hidden;
+}
+
+.hero-slide-description::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.4em;
+    background: linear-gradient(transparent 0%, rgba(18, 18, 18, 0.8) 70%, rgba(18, 18, 18, 1) 100%);
+    pointer-events: none;
+}
+
+.hero-slide-description.expanded::after {
+    display: none;
+}
+
+.description-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding: 0;
+    overflow: visible;
+    transform-origin: top;
+    min-height: auto;
+    background: transparent;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+    
+    * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .anime-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.8rem !important;
+        padding: 0 0.5rem !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+}
+
+.two-column-container {
+    display: block;
+}
+
+.left-column,
+.right-column {
+    width: 100%;
+}
+
+.left-column .hero-slide-description {
+    width: 100%;
+}
+
+.right-column {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    max-height: 4.2em;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.4;
+}
+
+.right-column.expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+.right-column::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.4em;
+    background: linear-gradient(transparent 0%, rgba(18, 18, 18, 0.8) 70%, rgba(18, 18, 18, 1) 100%);
+    pointer-events: none;
+}
+
+.right-column.expanded::after {
+    display: none;
+}
+
+.content-warning-right {
+    color: #8c8c8c;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 12px;
+}
+
+.content-warning-right strong {
+    font-weight: bold;
+    color: #fff;
+}
+
+.audio-info,
+.subtitles-info {
+    margin-bottom: 15px;
+}
+
+.audio-info:last-child,
+.subtitles-info:last-child {
+    margin-bottom: 0;
+}
+
+.audio-info h3,
+.subtitles-info h3 {
+    color: #ff6b35;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.audio-info,
+.subtitles-info {
+    color: #8c8c8c;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.audio-info strong,
+.subtitles-info strong {
+    font-weight: bold;
+    color: #fff;
+}
+
+.more-content-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 0;
+    margin-top: 10px;
+    text-align: left;
+    position: relative;
+    z-index: 15;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    align-self: flex-start;
+}
+
+.description-container {
+    position: relative;
+    max-height: 4.5em;
+    overflow: hidden;
+    margin-bottom: 0;
+    margin-top: 0 !important;
+    transition: max-height 0.4s ease-out;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    z-index: 10;
+    background-color: transparent;
+    border-radius: 0;
+    transform-origin: top;
+}
+
+.description-container::after {
+    content: '';
+    position: absolute;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 100%;
+    height: 2em; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 90%);
+    pointer-events: none;
+    z-index: 5; 
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.description-container.expanded::after {
+    opacity: 0;
+    height: 0;
+}
+
+.description-container.expanded {
+    height: auto;
+    max-height: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    position: relative;
+    z-index: 100;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    transform-origin: top;
+    width: 100%;
+    transition: max-height 0.4s ease-out, margin-bottom 0.4s ease-out;
+}
+
+.description-container.expanded::after {
+    opacity: 0;
+}
+
+.description-container.expanded + .more-content-button {
+    margin-top: 15px;
+}
+
+.hero-slide-description.expanded {
+    -webkit-line-clamp: unset;
+    height: auto;
+    max-height: none;
+    max-width: none;
+    overflow: visible;
+    width: 100%;
+    position: relative;
+    color: #fff;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    display: block;
+    align-self: flex-start;
+}
+
+.content-warning {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #aaa;
+    position: relative;
+    z-index: 101;
+    border-left: none;
+    font-size: 0.9rem;
+}
+
+.content-warning.visible {
+    display: block;
+}
+
+.description-wrapper .more-content-button {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    clear: both;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+    .right-column:not(.expanded) {
+        display: none !important;
+    }
+    
+    .left-column,
+    .right-column {
+        margin-right: 20px;
+    }
+    
+    .description-wrapper {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-top: 5px !important;
+    }
+    
+    .right-column {
+        background: transparent !important;
+    }
+    
+    .hero-slide-content {
+        gap: 0px !important;
+    }
+    
+    .hero-slide-button.play-button,
+    .hero-slide-button.add-button {
+        height: 36px;
+        min-height: 36px;
+        padding: 0 10px;
+        font-size: 13px;
+    }
+    
+    .hero-slide-button.play-button svg,
+    .hero-slide-button.add-button svg,
+    .hero-slide-button.unwatch-button svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .fixed-buttons-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7), transparent);
+        padding: 15px 10px;
+        z-index: 100;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+    }
+    
+    .fixed-buttons-container.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    
+    .fixed-buttons-container .hero-slide-button {
+        flex: 1;
+        margin: 0 5px;
+        height: 50px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .fixed-buttons-container .hero-slide-button svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .fixed-buttons-container .hero-slide-button.play-button {
+        flex: 3;
+        text-align: center;
+    }
+    
+    .fixed-buttons-container .hero-slide-button.add-button {
+        flex: 0 0 50px;
+        width: 50px;
+        height: 50px;
+        aspect-ratio: 1/1;
+    }
+}
+
+.more-content-section .anime-grid {
+    display: grid;
+    gap: 20px;
+    grid-auto-rows: max-content;
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .more-content-section .anime-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .more-content-section .anime-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1399px) {
+    .more-content-section .anime-grid {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: 1fr;
+    }
+}
+
+@media (min-width: 1400px) {
+    .more-content-section .anime-grid {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 1fr;
+    }
+}
+
+@media (min-width: 769px) {
+    .hero-slide {
+        justify-content: center;
+        align-items: flex-start;
+    }
+    
+    .hero-slide-content {
+        margin-bottom: 0;
+    }
+    
+    .fixed-buttons-container {
+        display: none !important;
+        margin-top: 0;
+    }
+    
+    .description-wrapper {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        padding: 0 5%;
+        box-sizing: border-box;
+    }
+    
+    .two-column-container {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .left-column {
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .left-column .hero-slide-description {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .right-column {
+        flex: 0 0 auto;
+        width: 50%;
+        max-width: 50%;
+        min-width: 0;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        align-self: flex-start;
+        height: 4.2em;
+        max-height: 4.2em;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .right-column.expanded {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+    
+    .right-column::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1.4em;
+        background: linear-gradient(transparent, rgba(18, 18, 18, 0.8));
+        pointer-events: none;
+    }
+    
+    .right-column.expanded::after {
+        display: none;
+    }
+    
+    .audio-info,
+    .subtitles-info {
+        margin-bottom: 20px;
+    }
+    
+    .more-content-button {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 999 !important;
+    }
+    
+    .audio-info:last-child,
+    .subtitles-info:last-child {
+        margin-bottom: 0;
+    }
+    
+    .audio-info h3,
+    .subtitles-info h3 {
+        color: #ff6b35;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .audio-info,
+    .subtitles-info {
+        color: #8c8c8c;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    
+    .audio-info strong,
+    .subtitles-info strong {
+        font-weight: bold;
+        color: #fff;
+    }
+    
+    .content-warning-right {
+        color: #8c8c8c;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-top: 15px;
+    }
+    
+    .content-warning-right strong {
+        font-weight: bold;
+        color: #fff;
+    }
+    
+    .description-container.expanded {
+        max-width: none;
+        width: 100%;
+    }
+    
+}
+    .modal-content {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 400px;
+        width: 80%;
+        position: relative;
+        color: white;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+.full-description-container {
+    max-width: 1200px;
+    margin: 30px auto 20px;
+    padding: 0 20px;
+    color: #fff;
+}
+
+.description-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.full-description {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    max-height: 4.8em;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease;
+}
+
+.full-description.expanded {
+    max-height: none;
+}
+
+.more-details-button {
+    color: var(--accent-color);
+    background: none;
+    border: none;
+    padding: 5px 0;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: inline-block;
+    position: relative;
+    z-index: 102;
+}
+
+.more-details-button:hover {
+    text-decoration: underline;
+}
+
+.seasons-container {
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    transition: margin-top 0.4s ease-out;
+}
+
+.hero-slide:has(.description-container.expanded) .seasons-container {
+    margin-top: 40px;
+}
