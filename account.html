@@ -78,20 +78,6 @@
                 <h2>Gestión de Datos</h2>
             </div>
             <div class="card-body">
-                
-                <div class="section-card">
-                    <h3><i class="fab fa-google-drive"></i> Google Drive</h3>
-                    <p>Gestiona tus datos en Google Drive de forma manual.</p>
-                    
-                    <div class="drive-buttons">
-                        <button id="signin-button" class="btn btn-google"><i class="fab fa-google"></i> Iniciar sesión</button>
-                        <button id="load-button" class="btn btn-primary" style="display:none;"><i class="fas fa-download"></i> Cargar</button>
-                        <button id="save-button" class="btn btn-success" style="display:none;"><i class="fas fa-upload"></i> Guardar</button>
-                        <button id="signout-button" class="btn btn-secondary" style="display:none;"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-                    </div>
-                    <div id="drive-result" class="alert"></div>
-                </div>
-                
                 <div class="section-card">
                     <h3><i class="fas fa-file-export"></i> Exportar Datos</h3>
                     <p>Genera un código para guardar tus datos y poder recuperarlos más tarde.</p>
@@ -109,6 +95,27 @@
                     <textarea id="import-code" class="form-control" rows="4" placeholder="Pega aquí tu código..."></textarea>
                     <button id="import-data-button" class="btn">Importar Datos</button>
                     <div id="import-result" class="alert"></div>
+                </div>
+
+                <div class="section-card google-drive-card">
+                    <h3><i class="fab fa-google-drive"></i> Google Drive</h3>
+                    <p>Gestiona tus datos en Google Drive de forma automatica.</p>
+                    
+                    <div class="drive-buttons">
+                        <button id="signin-button" class="btn btn-google"><i class="fab fa-google"></i> Iniciar sesión</button>
+                        <button id="load-button" class="btn btn-primary" style="display:none;"><i class="fas fa-download"></i> Cargar</button>
+                        <button id="save-button" class="btn btn-success" style="display:none;"><i class="fas fa-upload"></i> Guardar</button>
+                        <button id="signout-button" class="btn btn-secondary" style="display:none;"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+                    </div>
+                    <div id="drive-result" class="alert"></div>
+                    
+                    <div class="coming-soon-overlay">
+                        <div class="coming-soon-message">
+                            <i class="fas fa-lock"></i>
+                            <h4>Google Drive</h4>
+                            <p>Esta funcionalidad estará disponible en una futura actualización</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

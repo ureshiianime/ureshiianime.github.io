@@ -330,5 +330,3 @@ window.initializeGoogleDrive = initializeGoogleDrive;
 window.signInToGoogleDrive = signInToGoogleDrive;
 window.signOutFromGoogleDrive = signOutFromGoogleDrive;
 window.isGoogleDriveConnected = isGoogleDriveConnected;
-
-console.log('Sistema centralizado de Google Drive cargado');

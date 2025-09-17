@@ -133,6 +133,109 @@
             if (watchedEpisodes[animeId] && watchedEpisodes[animeId].includes(episodeNumber)) {
                 watchedEpisodes[animeId] = watchedEpisodes[animeId].filter(ep => ep !== episodeNumber);
                 localStorage.setItem(WATCHED_EPISODES_KEY, JSON.stringify(watchedEpisodes));
+                
+                // Actualizar el botón COMENZAR A VER después de eliminar un episodio visto
+                updatePlayButton(animeId);
+            }
+        }
+        
+        function updatePlayButton(animeId) {
+            const anime = animeData.find(a => a.id === animeId);
+            if (!anime) return;
+            
+            const playButton = document.querySelector('.play-button');
+            if (!playButton) return;
+            
+            // Encontrar el primer episodio no visto
+            let firstUnwatchedEpisode = null;
+            let firstUnwatchedSeason = null;
+            let firstUnwatchedEpisodeNumber = null;
+            let firstUnwatchedSeasonSlug = null;
+            
+            for (const season of anime.seasons) {
+                for (let i = 1; i <= season.episodes; i++) {
+                    const globalEpisode = getGlobalEpisodeNumber(anime, season.number, i);
+                    if (!isEpisodeWatched(anime.id, globalEpisode)) {
+                        firstUnwatchedEpisode = globalEpisode;
+                        firstUnwatchedSeason = season.number;
+                        firstUnwatchedEpisodeNumber = i;
+                        firstUnwatchedSeasonSlug = season.slug;
+                        break;
+                    }
+                }
+                if (firstUnwatchedEpisode !== null) break;
+            }
+            
+            if (firstUnwatchedEpisode !== null) {
+                // Verificar si el episodio no visto está disponible
+                let isEpisodeAvailable = true;
+                const targetSeason = anime.seasons.find(s => s.number === firstUnwatchedSeason);
+                
+                if (targetSeason && targetSeason.newEpisode) {
+                    const { releasedEpisodes } = targetSeason.newEpisode;
+                    if (firstUnwatchedEpisodeNumber > releasedEpisodes) {
+                        isEpisodeAvailable = false;
+                    }
+                }
+                
+                playButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E${firstUnwatchedEpisodeNumber}`;
+                
+                if (isEpisodeAvailable) {
+                    playButton.onclick = () => openEpisode(anime, firstUnwatchedEpisode, firstUnwatchedSeason, firstUnwatchedEpisodeNumber, firstUnwatchedSeasonSlug);
+                } else {
+                    // Mostrar modal si el episodio no está disponible aún
+                    playButton.onclick = () => {
+                        const modal = document.createElement('div');
+                        modal.className = 'release-date-modal';
+                        
+                        const modalContent = document.createElement('div');
+                        modalContent.className = 'modal-content';
+                        
+                        const closeBtn = document.createElement('span');
+                        closeBtn.className = 'close-modal';
+                        closeBtn.innerHTML = '&times;';
+                        closeBtn.onclick = () => {
+                            modal.classList.remove('show');
+                            setTimeout(() => {
+                                document.body.removeChild(modal);
+                            }, 300);
+                        };
+                        
+                        const title = document.createElement('h2');
+                        title.textContent = 'Próximo episodio';
+                        
+                        const completedMessage = document.createElement('p');
+                        completedMessage.textContent = 'Has completado todos los episodios disponibles.';
+                        completedMessage.style.fontWeight = 'bold';
+                        completedMessage.style.color = 'var(--accent-color)';
+                        
+                        const date = document.createElement('p');
+                        date.textContent = `Fecha de lanzamiento: ${targetSeason.newEpisode.displayDateHuman || targetSeason.newEpisode.displayDate || targetSeason.newEpisode.date}`;
+                        
+                        const info = document.createElement('p');
+                        info.textContent = `Estado: ${targetSeason.newEpisode.status || 'Pendiente'}`;
+                        
+                        modalContent.appendChild(closeBtn);
+                        modalContent.appendChild(title);
+                        modalContent.appendChild(completedMessage);
+                        modalContent.appendChild(date);
+                        modalContent.appendChild(info);
+                        modal.appendChild(modalContent);
+                        
+                        document.body.appendChild(modal);
+                        
+                        setTimeout(() => {
+                            modal.classList.add('show');
+                        }, 10);
+                    };
+                }
+            } else {
+                // Si no hay episodios sin ver, mostrar el primer episodio
+                const firstSeason = anime.seasons[0];
+                if (firstSeason) {
+                    playButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E1';
+                    playButton.onclick = () => openEpisode(anime, 1, firstSeason.number, 1, firstSeason.slug);
+                }
             }
         }
         
@@ -299,7 +402,6 @@
             updateSeasonBadges();
             
             if (dataChanged && window.location.pathname.includes('anime.html')) {
-                console.log('Se detectaron cambios en los datos, actualizando la vista...');
                 refreshCurrentAnimeView();
             }
         }
@@ -385,7 +487,6 @@
             const currentAnimeId = parseInt(currentUrlParams.get('id'));
             
             if (currentAnimeId) {
-                console.log('Refrescando vista del anime ID:', currentAnimeId);
                 displayAnimeDetails(currentAnimeId);
             }
         }
@@ -528,8 +629,68 @@
             playButton.className = 'hero-slide-button play-button';
             
             if (firstUnwatchedEpisode !== null) {
+                // Verificar si el episodio no visto está disponible
+                let isEpisodeAvailable = true;
+                const targetSeason = anime.seasons.find(s => s.number === firstUnwatchedSeason);
+                
+                if (targetSeason && targetSeason.newEpisode) {
+                    const { releasedEpisodes } = targetSeason.newEpisode;
+                    if (firstUnwatchedEpisodeNumber > releasedEpisodes) {
+                        isEpisodeAvailable = false;
+                    }
+                }
+                
                 playButton.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg> COMENZAR A VER E${firstUnwatchedEpisodeNumber}`;
-                playButton.onclick = () => openEpisode(anime, firstUnwatchedEpisode, firstUnwatchedSeason, firstUnwatchedEpisodeNumber, firstUnwatchedSeasonSlug);
+                
+                if (isEpisodeAvailable) {
+                    playButton.onclick = () => openEpisode(anime, firstUnwatchedEpisode, firstUnwatchedSeason, firstUnwatchedEpisodeNumber, firstUnwatchedSeasonSlug);
+                } else {
+                    // Mostrar modal si el episodio no está disponible aún
+                    playButton.onclick = () => {
+                        const modal = document.createElement('div');
+                        modal.className = 'release-date-modal';
+                        
+                        const modalContent = document.createElement('div');
+                        modalContent.className = 'modal-content';
+                        
+                        const closeBtn = document.createElement('span');
+                        closeBtn.className = 'close-modal';
+                        closeBtn.innerHTML = '&times;';
+                        closeBtn.onclick = () => {
+                            modal.classList.remove('show');
+                            setTimeout(() => {
+                                document.body.removeChild(modal);
+                            }, 300);
+                        };
+                        
+                        const title = document.createElement('h2');
+                        title.textContent = 'Próximo episodio';
+                        
+                        const completedMessage = document.createElement('p');
+                        completedMessage.textContent = 'Has completado todos los episodios disponibles.';
+                        completedMessage.style.fontWeight = 'bold';
+                        completedMessage.style.color = 'var(--accent-color)';
+                        
+                        const date = document.createElement('p');
+                        date.textContent = `Fecha de lanzamiento: ${targetSeason.newEpisode.displayDateHuman || targetSeason.newEpisode.displayDate || targetSeason.newEpisode.date}`;
+                        
+                        const info = document.createElement('p');
+                        info.textContent = `Estado: ${targetSeason.newEpisode.status || 'Pendiente'}`;
+                        
+                        modalContent.appendChild(closeBtn);
+                        modalContent.appendChild(title);
+                        modalContent.appendChild(completedMessage);
+                        modalContent.appendChild(date);
+                        modalContent.appendChild(info);
+                        modal.appendChild(modalContent);
+                        
+                        document.body.appendChild(modal);
+                        
+                        setTimeout(() => {
+                            modal.classList.add('show');
+                        }, 10);
+                    };
+                }
             } else {
                 let hasUpcomingEpisode = false;
                 let upcomingEpisodeInfo = null;

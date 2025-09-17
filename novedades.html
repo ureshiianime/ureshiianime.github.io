@@ -91,7 +91,6 @@
         const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
         const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
         
-        if (diffDays > 30) return null;
         if (diffHours < 24) return 'last24h';
         if (diffDays < 7) return 'thisweek';
         return 'older';
@@ -101,7 +100,7 @@
         let episodes = [];
         
         const generatedDateEpisodes = animeData
-            .filter(anime => anime.getTimeCategory)
+            .filter(anime => anime.generatedDate)
             .map(anime => ({
                 animeId: anime.id,
                 animeTitle: anime.title,

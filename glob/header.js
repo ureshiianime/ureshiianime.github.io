@@ -43,16 +43,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const header = document.querySelector('header');
     let lastScrollTop = 0;
+    let ticking = false;
     
-    window.addEventListener('scroll', function() {
+    function updateHeader() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        if (scrollTop > lastScrollTop && scrollTop > header.offsetHeight) {
+        // Evitar valores negativos en algunos navegadores
+        const currentScrollTop = Math.max(0, scrollTop);
+        
+        if (currentScrollTop > lastScrollTop && currentScrollTop > header.offsetHeight) {
+            // Scrolling hacia abajo - ocultar header
             header.classList.add('hidden');
-        } else {
+        } else if (currentScrollTop < lastScrollTop) {
+            // Scrolling hacia arriba - mostrar header inmediatamente
             header.classList.remove('hidden');
         }
         
-        lastScrollTop = scrollTop;
+        lastScrollTop = currentScrollTop;
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
     });
 });

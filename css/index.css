@@ -858,29 +858,32 @@ body.modal-open {
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .anime-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
         gap: 1.5rem;
     }
 }
 
 @media (min-width: 1025px) and (max-width: 1600px) {
     .anime-grid {
-        grid-template-columns: repeat(5, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 320px)) !important;
         gap: 1.5rem;
+        justify-content: center;
     }
 }
 
 @media (min-width: 1601px) {
     .anime-grid {
-        grid-template-columns: repeat(6, 1fr) !important;
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 340px)) !important;
+        gap: 1.8rem;
+        justify-content: center;
     }
 }
 
 @media (max-width: 768px) {
     .anime-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 280px)) !important;
         gap: 1rem;
+        justify-content: center;
     }
     
     .load-more-button {
@@ -1528,6 +1531,17 @@ body.modal-open {
     object-position: left;
     }
     
+    .hero-slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(to right, var(--background-color), transparent);
+        z-index: 1;
+    }
+    
     .hero-slide::after {
         content: '';
         position: absolute;
@@ -1884,5 +1898,43 @@ header.hidden {
     .anime-card:hover .in-list-indicator,
     .anime-card:hover .in-list-corner {
         opacity: 1 !important;
+    }
+    
+    .notification-container {
+        width: 95%;
+        max-width: none;
+        margin: 0 10px;
+        border-radius: 8px;
+        max-height: 85vh;
+    }
+    
+    .notification-container h2 {
+        padding: 1rem;
+        font-size: 1.3rem;
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .notification-content {
+        padding: 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .notification-content p {
+        margin-bottom: 0.8rem;
+    }
+    
+    .notification-content hr {
+        margin: 1rem 0;
+    }
+    
+    .notification-content .disclaimer {
+        font-size: 0.9rem;
+    }
+    
+    .notification-close {
+        top: 0.6rem;
+        right: 0.8rem;
+        font-size: 1.8rem;
     }
 }

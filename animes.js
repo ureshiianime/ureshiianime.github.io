@@ -4,6 +4,72 @@ const carouselAnimeIds = [1, 2, 3, 4, 5, 6];
 // AnimeData UreshiiAPI.
 const animeData = [
     {
+        id: 6,
+        title: "Boruto: Naruto Next Generations",
+        image: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85/catalog/crunchyroll/65e3612d8770257c6a0820412be2cd37.jpg",
+        banner: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=cover,format=auto,quality=85,width=1920/keyart/GR75Q020Y-backdrop_wide",
+        logo: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=600/keyart/GR75Q020Y-title_logo-en-us",
+        inMyList: false,
+        subtitled: true,
+        dubbed: false,
+        contentRating: "+14",
+        contentWarning: "",
+        description: "En Konoha han entrado en una era de paz y modernidad. Los altos edificios despuntan en las calles, las pantallas gigantes muestran imágenes de todo tipo y los medios de transporte conectan los vairos distritos. Pese a que sigue siendo una aldea ninja, el número de civiles ha aumentado y la vida de los ninja ha cambiado.  Boruto Uzumaki es hijo del Séptimo Hokage, Naruto Uzumaki, y se ha unido a la Academia Ninja para aprender. Otros estudiantes lo menosprecian de inmediato y consideran que solo está ahí por ser hijo del Hokage, pero pronto Boruto disipará todas esas dudas sobre él.",
+        seasons: [
+            {
+                number: 1,
+                title: "Temporada 1",
+                episodes: 293,
+                slug: "boruto-naruto-next-generations-tv"
+            }
+        ],
+        generatedDate: "2025-09-17T08:56:52.660Z"
+    },
+    {
+        id: 5,
+        title: "Naruto Shippuden",
+        image: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85/catalog/crunchyroll/01ec367b44f0a568430a957e042639af.jpg",
+        banner: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=cover,format=auto,quality=85,width=1920/keyart/GYQ4MW246-backdrop_wide",
+        logo: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=600/keyart/GYQ4MW246-title_logo-en-us",
+        inMyList: false,
+        subtitled: true,
+        dubbed: false,
+        contentRating: "+14",
+        contentWarning: "",
+        description: "Naruto quiere ser el mejor ninja en la tierra. La acción comienza tras los dos años y medio que el protagonista, Naruto Uzumaki, ha pasado entrenando con su maestro Jiraiya. En ella reaparecen todos los personajes de la serie anterior pero con más experiencia y fuerza. Además, la Organización Akatsuki entra en acción, tras su breve aparición en la parte anterior, y se revelan sus objetivos.",
+        seasons: [
+            {
+                number: 1,
+                title: "Temporada 1",
+                episodes: 500,
+                slug: "naruto-shippuden-hd"
+            }
+        ],
+        generatedDate: "2025-09-17T08:46:44.979Z"
+    },
+    {
+        id: 4,
+        title: "Naruto",
+        image: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85/catalog/crunchyroll/8532171bec0d05bfe45769a330fbab82.jpg",
+        banner: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=cover,format=auto,quality=85,width=1920/keyart/GY9PJ5KWR-backdrop_wide",
+        logo: "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=600/keyart/GY9PJ5KWR-title_logo-en-us",
+        inMyList: false,
+        subtitled: true,
+        dubbed: true,
+        contentRating: "+14",
+        contentWarning: "",
+        description: "Naruto Uzumaki es un niño marginado en la aldea ninja en la que vive. En su interior reside el poder de una bestia que estuvo al borde de destruir el pueblo años atrás, el Kyubi, el zorro de nueve colas, lo que hace que nadie quiera acercarse a él por considerarlo maldito. Pese a su soledad y su tristeza, Naruto quiere ser un ninja, pero no uno cualquiera: quiere ser Hokage, el líder de la aldea. En su camino, sus convicciones atraerán a muchos amigos y compañeros de viaje.",
+        seasons: [
+            {
+                number: 1,
+                title: "Temporada 1",
+                episodes: 220,
+                slug: "naruto"
+            }
+        ],
+        generatedDate: "2025-09-17T08:42:17.268Z"
+    },
+    {
         id: 3,
         title: "Ouran High School Host Club",
         image: "https://m.media-amazon.com/images/M/MV5BMGMzZTQyMmUtNWUwZS00NDU2LWE1Y2YtZWVkNGM1MGNkZDFjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",

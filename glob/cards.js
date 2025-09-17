@@ -759,7 +759,6 @@ function syncAnimeListState() {
                 updateVisualIndicators(anime.id, anime.inMyList);
             }
         });
-        console.log('Estado de animes sincronizado con localStorage');
     }
 }
 

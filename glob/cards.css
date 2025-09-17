@@ -1,6 +1,6 @@
 .anime-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     gap: 1.5rem;
     width: 100%;
     max-width: 100%;
@@ -13,14 +13,14 @@
 
 @media (min-width: 769px) and (max-width: 1199px) {
     .anime-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
         gap: 1.5rem;
     }
 }
 
 @media (min-width: 1200px) and (max-width: 1599px) {
     .anime-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(240px, 340px));
         gap: 1.8rem;
     }
 }
@@ -619,7 +619,7 @@
 
                                 @media screen and (min-width: 1600px) {
                     .anime-grid {
-                        grid-template-columns: repeat(6, 1fr);
+                        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
                         gap: 2rem;
                     }
                     

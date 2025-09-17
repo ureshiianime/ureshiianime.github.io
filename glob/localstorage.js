@@ -37,7 +37,6 @@ function safeParseLocalStorage(key, defaultValue = []) {
 function checkDriveConnection() {
     if (typeof window.googleDrive !== 'undefined' && window.googleDrive.isConnected) {
         isDriveConnected = window.googleDrive.isConnected();
-        console.log('Estado de conexión con Google Drive (centralizado):', isDriveConnected ? 'Conectado' : 'Desconectado');
         return isDriveConnected;
     }
     
@@ -56,7 +55,6 @@ function checkDriveConnection() {
     }
     
     isDriveConnected = hasValidToken;
-    console.log('Estado de conexión con Google Drive (fallback):', isDriveConnected ? 'Conectado' : 'Desconectado');
     return isDriveConnected;
 }
 
@@ -139,7 +137,6 @@ function invalidateDriveCache() {
 
 async function loadInitialDataFromDrive() {
     if (!checkDriveConnection()) {
-        console.log('Google Drive no está conectado, usando localStorage');
         return;
     }
     
@@ -226,7 +223,6 @@ function manualSaveToDrive() {
 }
 
 function initManualSync() {
-    console.log('Inicializando sistema manual de Google Drive...');
     
     if (window.googleDrive && window.googleDrive.initialize) {
         window.googleDrive.initialize().then(() => {
@@ -235,7 +231,6 @@ function initManualSync() {
             console.error('Error al inicializar Google Drive desde localstorage.js:', error);
         });
     } else {
-        console.warn('Google Drive no disponible en initManualSync');
     }
 }
 
