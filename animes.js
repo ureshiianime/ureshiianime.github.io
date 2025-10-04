@@ -1,8 +1,30 @@
 // Animes a mostrar en el carrousel de la página de inicio.
-const carouselAnimeIds = [1, 2, 3, 4, 5, 6];
+const carouselAnimeIds = [1, 2, 3, 4, 5, 21];
 
 // AnimeData UreshiiAPI.
 const animeData = [
+    {
+        id: 21,
+        title: "Película | Black Clover: Mahou Tei no Ken",
+        image: "https://image.tmdb.org/t/p/original/nqaSA9MW9nZLbl7NKVDlTQ2Fwwo.jpg",
+        banner: "https://files.peakd.com/file/peakd-hive/helchjr/23wC1UDZyHoGYFiEhUHA2NYWFR3861vPbM15hinQoRoVTTix7ZnLt8vnvy4MUCb3HVHZR.png",
+        logo: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/76af57fc-7d8b-4116-8c09-75841b6d2da8/dbmt5i0-681aa9ed-9f39-43f6-9d29-cfb23030bf9e.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi83NmFmNTdmYy03ZDhiLTQxMTYtOGMwOS03NTg0MWI2ZDJkYTgvZGJtdDVpMC02ODFhYTllZC05ZjM5LTQzZjYtOWQyOS1jZmIyMzAzMGJmOWUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.68cW1Ac8gR-bV2B8_Z1RM9dVVCw9PSF0Mk58aDvBgRI",
+        inMyList: false,
+        subtitled: true,
+        dubbed: false,
+        contentRating: "+14",
+        contentWarning: "",
+        description: "Black Clover: Mahou Tei no Ken (2023) es la primera película de la popular serie Black Clover. La historia se centra en Asta y los Caballeros Mágicos enfrentándose al regreso de cuatro antiguos Reyes Magos, revividos para destruir el Reino del Trébol. Entre ellos destaca Conrad Leto, un ex Rey Mago con ideales radicales que busca reformar el mundo mágico. Con intensas batallas, poderes épicos y animación espectacular, la película ofrece acción continua y revela más sobre el pasado del reino. Es una aventura emocionante que complementa perfectamente la serie principal.",
+        seasons: [
+            {
+                number: 1,
+                title: "Película",
+                episodes: 1,
+                slug: "black-clover-mahou-tei-no-ken"
+            }
+        ],
+        generatedDate: "2025-10-04T10:20:14.672Z"
+    },
     {
         id: 20,
         title: "Attack on Titan",
@@ -46,7 +68,7 @@ const animeData = [
     {
         id: 19,
         title: "Tokyo Ghoul: Pinto",
-        image: "https://static.wikia.nocookie.net/tokyo-ghoul-la/images/9/99/TG-_Pinto.png/revision/latest/thumbnail/width/360/height/360?cb=20160330034941&path-prefix=es",
+        image: "https://www3.animeflv.net/uploads/animes/covers/2342.jpg",
         banner: "https://image.tmdb.org/t/p/original/98o16o9Nlb5nv56f3j8AAA8bndo.jpg",
         logo: "https://occ-0-8407-92.1.nflxso.net/dnm/api/v6/S4oi7EPZbv2UEPaukW54OORa0S8/AAAABe0ZYDJJPv9v1Qsw_4ZbcpwVXyX7aOGmqTROSJuKfzKIU9KV5AmQjcjI_mLLCXtuuoM7kv01_i5cY4OcRj4HhUSjCepfgMfWkw.png?r=933",
         inMyList: false,
